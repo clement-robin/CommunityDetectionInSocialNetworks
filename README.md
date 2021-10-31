@@ -5,3 +5,4 @@ Makefile pour compiler les fichiers (make necessairement installer sur la machin
 
 pour compiler : make
 pour executer : ./graph
+pour supprimer les .o et executable : make clean

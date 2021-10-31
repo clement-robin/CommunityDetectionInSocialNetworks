@@ -2,12 +2,12 @@ CC=g++
 CFLAGS= -Wall
 EXE=graph
 
-all: test.o test.cpp
+all: graph.o graph.cpp
 	rm -f $(EXE)
-	$(CC) $(CFLAGS) test.cpp -o $(EXE) 
+	$(CC) $(CFLAGS) graph.cpp -o $(EXE) 
 
-test.o: test.cpp test.h
-	$(CC) $(CFLAGS) -c test.cpp
+test.o: graph.cpp graph.h
+	$(CC) $(CFLAGS) -c graph.cpp
 
 clean:
 	rm -f *.o
