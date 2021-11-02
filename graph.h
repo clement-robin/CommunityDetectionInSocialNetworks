@@ -4,27 +4,26 @@
 using namespace std;
 
 
-class Triplet {
+class Lien {
     public:
-        Triplet();
-        Triplet(int d, char c, int a);
-        void afficher_triplet();
+        Lien();
+        Lien(int d, int a);
+        void afficher_lien();
 
     private:
         int sommet_depart;
-        char valeur;
         int sommet_arrive;
 };
 
 class Graph {
     public:
         Graph();
-        Graph(int * som, int init, int * accept, Triplet * transi);
+        Graph(int nb_som, int * som, int nb_transi, Lien * transi);
         void afficher_graph();  
 
     private:
+        int nombre_sommets;
         int * sommets;
-        int etat_initial;
-        int * etats_accepteurs;
-        Triplet * transitions;
+        int nombre_transitions;
+        Lien * transitions;
 };

@@ -5,19 +5,18 @@ using namespace std;
 // méthodes de la classe Triplet 
 
 
-Triplet::Triplet()
+Lien::Lien()
 {}
 
-Triplet::Triplet(int d, char c, int a)
+Lien::Lien(int d, int a)
 {
     sommet_depart = d;
-    valeur = c;
     sommet_arrive = a;
 }
 
-void Triplet::afficher_triplet() 
+void Lien::afficher_lien() 
 {
-    cout << "[" << sommet_depart << "-" << valeur << "-" << sommet_arrive << "]";
+    cout << "[" << sommet_depart << "-" << sommet_arrive << "]";
 }
 
 // méthodes de la classe Graph
@@ -25,27 +24,23 @@ void Triplet::afficher_triplet()
 Graph::Graph()
 {}
 
-Graph::Graph(int * som, int init, int * accept, Triplet * transi)
+Graph::Graph(int nb_som, int * som, int nb_transi, Lien * transi)
 {
+    nombre_sommets = nb_som;
     sommets = som;
-    etat_initial = init;
-    etats_accepteurs = accept;
+    nombre_transitions = nb_transi;
     transitions = transi;
 }
 
 void Graph::afficher_graph()
 {
-    cout << "Graph :" << endl << "Q = ";
-    for(int i=0; i<4; i++) {
+    cout << "Graph :" << endl << "Sommets = ";
+    for(int i=0; i<nombre_sommets; i++) {
         cout << sommets[i] << " ";
     }
-    cout << endl << "s = " << etat_initial << endl << "F = ";
-    for(int i=0; i<2; i++) {
-        cout << etats_accepteurs[i] << " ";
-    }
     cout << endl << "D = ";
-    for(int i=0; i<2; i++) {
-        transitions[i].afficher_triplet();
+    for(int i=0; i<nombre_transitions; i++) {
+        transitions[i].afficher_lien();
         cout << " ";
     }
     cout << endl;
@@ -54,14 +49,15 @@ void Graph::afficher_graph()
 
 int main() {
     
-    Triplet t= Triplet(1,'a',2);
-    Triplet t2= Triplet(3,'a',2);
-
+    Lien l= Lien(1,2);
+    Lien l2= Lien(3,2);
+    l.afficher_lien();
+    l2.afficher_lien();
     int sommets[4] = {0,1,2,3};
-    int accepteurs[2] = {2,3};
-    Triplet tab[2] = {t,t2};
 
-    Graph g = Graph(sommets,0,accepteurs,tab);
+    Lien tab[2] = {l,l2};
+
+    Graph g = Graph(4, sommets,2,tab);
     g.afficher_graph();
 
     return 0;
