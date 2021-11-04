@@ -1,29 +1,25 @@
 #include <iostream>
-#define TAILLE 50
+#include <time.h>
+
 
 using namespace std;
 
 
-class Lien {
-    public:
-        Lien();
-        Lien(int d, int a);
-        void afficher_lien();
-
-    private:
-        int sommet_depart;
-        int sommet_arrive;
-};
-
 class Graph {
     public:
         Graph();
-        Graph(int nb_som, int * som, int nb_transi, Lien * transi);
-        void afficher_graph();  
+        Graph(int nb_som);
+        void afficher_graph(); 
+        void ajout_arrete(int a, int b);
+        void genere_arrete_probabilite(float p);
+        void genere_graph_triangle();
+        int calcul_degre_sommet(int s);
+        void genere_barabasi_albert(int a);
 
     private:
         int nombre_sommets;
-        int * sommets;
-        int nombre_transitions;
-        Lien * transitions;
+        int ** matrice_adjacence;
+        int degres_total;
 };
+
+
