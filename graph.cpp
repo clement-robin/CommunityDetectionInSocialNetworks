@@ -133,20 +133,17 @@ Graph genere_barabasi_albert()
 
     while (ans != -1)
     {
-        Graph g2 = Graph();
-        g2 = g1;
-        g2.ajout_sommet();
-        for (int j = 0; j < g2.getNombreSommets()-1; j++)
+        g1.ajout_sommet();
+        for (int j = 0; j < g1.getNombreSommets()-1; j++)
         {
-            float p = float (g2.calcul_degre_sommet(j)) / float (g2.getDegresTotal()) * 100;
+            float p = float (g1.calcul_degre_sommet(j)) / float (g1.getDegresTotal()) * 100;
             float random = float(rand()%100);
             //cout << "r: " << random << ", p: " << p << endl;
             if(random <= p && ans>0) {
-                g2.ajout_arrete(g2.getNombreSommets()-1,j);
+                g1.ajout_arrete(g1.getNombreSommets()-1,j);
                 ans--;
             }
         }
-        g1 = g2;
         cout << "Tapez un nombre m positif (-1 pour arreter)" << endl; // (nb d'arrete max a ajouter lors d'une generation)
         cin >> ans;
     }
