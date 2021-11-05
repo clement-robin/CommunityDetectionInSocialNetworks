@@ -70,6 +70,11 @@ int Graph::getNombreArretes()
     return degres_total/2;
 }
 
+int Graph::getNombreSommets()
+{
+    return nombre_sommets;
+}
+
 
 void Graph::genere_graph_triangle()
 {
@@ -81,13 +86,11 @@ void Graph::genere_graph_triangle()
 }
 
 
-
-
 int Graph::calcul_degre_sommet(int s)
 {
     int compteur=0;
     for(int i=0; i<nombre_sommets ; i++) {
-        cout << i << "," << s << endl;
+        /*cout << i << "," << s << endl;*/
         if(matrice_adjacence[s][i]==1)
         {
             compteur++;
@@ -96,19 +99,58 @@ int Graph::calcul_degre_sommet(int s)
     return compteur;
 }
 
-
-void Graph::genere_barabasi_albert(int arrete_max)
+void Graph::ajout_sommet()
 {
-    Graph g = Graph();
-    g.genere_graph_triangle();
-/*  fixe nombre sommet
-    (parcourt en triangle)
-    boucle de 3 jusqua a (nouvelles arretes)
-        ajout un noeud
-        proba noeud arret avec le noeud n = degre noeud n / degre total
-*/
+    nombre_sommets = nombre_sommets+1;
+    int **tab = new int*[nombre_sommets];
+    for(int i = 0; i < nombre_sommets; ++i) {
+        tab[i] = new int[nombre_sommets];
+    }
 
-    
+    for(int i=0; i<nombre_sommets-1; i++) {
+        for(int j=0; j<nombre_sommets-1; j++) {
+            tab[i][j]=matrice_adjacence[i][j];
+        }
+    }
+    for(int i=nombre_sommets-1; i<nombre_sommets; i++) {
+        for(int j=nombre_sommets-1; j<nombre_sommets; j++) {
+            tab[i][j]=0;
+        }
+    }
+
+    matrice_adjacence = tab;
+}
+
+Graph genere_barabasi_albert()
+{
+    int ans = 0;
+
+    Graph g1 = Graph();
+    g1.genere_graph_triangle();
+
+    cout << "Tapez un nombre m positif (-1 pour arreter)" << endl; // (nb d'arrete max a ajouter lors d'une generation)
+    cin >> ans;
+
+    while (ans != -1)
+    {
+        Graph g2 = Graph();
+        g2 = g1;
+        g2.ajout_sommet();
+        for (int j = 0; j < g2.getNombreSommets()-1; j++)
+        {
+            float p = float (g2.calcul_degre_sommet(j)) / float (g2.getDegresTotal()) * 100;
+            float random = float(rand()%100);
+            //cout << "r: " << random << ", p: " << p << endl;
+            if(random <= p && ans>0) {
+                g2.ajout_arrete(g2.getNombreSommets()-1,j);
+                ans--;
+            }
+        }
+        g1 = g2;
+        cout << "Tapez un nombre m positif (-1 pour arreter)" << endl; // (nb d'arrete max a ajouter lors d'une generation)
+        cin >> ans;
+    }
+    return g1;
 }
 
 
@@ -133,6 +175,9 @@ void test_probabilite(int sommets, int nombre_test, float proba)
 int main() {
     srand(time(NULL));
 
+    Graph g = Graph();
+    g = genere_barabasi_albert();
+    g.afficher_graph();
 
     return 0;
 }
