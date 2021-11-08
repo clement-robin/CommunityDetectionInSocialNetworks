@@ -121,15 +121,20 @@ void Graph::ajout_sommet()
     matrice_adjacence = tab;
 }
 
-Graph genere_barabasi_albert()
+int demande_nombre()
 {
     int ans = 0;
+    cout << "Tapez un nombre m positif (-1 pour arreter)" << endl; // (nb d'arrete max a ajouter lors d'une generation)
+    cin >> ans;
+    return ans;
+}
+
+Graph genere_barabasi_albert()
+{
+    int ans = demande_nombre();
 
     Graph g1 = Graph();
     g1.genere_graph_triangle();
-
-    cout << "Tapez un nombre m positif (-1 pour arreter)" << endl; // (nb d'arrete max a ajouter lors d'une generation)
-    cin >> ans;
 
     while (ans != -1)
     {
@@ -138,14 +143,12 @@ Graph genere_barabasi_albert()
         {
             float p = float (g1.calcul_degre_sommet(j)) / float (g1.getDegresTotal()) * 100;
             float random = float(rand()%100);
-            //cout << "r: " << random << ", p: " << p << endl;
             if(random <= p && ans>0) {
                 g1.ajout_arrete(g1.getNombreSommets()-1,j);
                 ans--;
             }
         }
-        cout << "Tapez un nombre m positif (-1 pour arreter)" << endl; // (nb d'arrete max a ajouter lors d'une generation)
-        cin >> ans;
+       ans = demande_nombre();
     }
     return g1;
 }
