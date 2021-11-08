@@ -7,20 +7,21 @@ using namespace std;
 
 class Graph {
     public:
-        // fonction de base pour le graphe
+        // Fonction de base pour le graphe
         Graph();
         Graph(int nb_som);
         void afficher_graph(); 
         void ajout_arrete(int a, int b);
         void ajout_sommet();
 
-        // generation d'un graphe
+        //Generation d'un graphe
         void genere_arrete_probabilite(float p);
         void genere_graph_triangle();
 
+        // Calcul sur le graph
         int calcul_degre_sommet(int s);
 
-        // setters et getters
+        // Setters et Getters
         int getDegresTotal();
         int getNombreArretes();
         int getNombreSommets();
@@ -33,5 +34,6 @@ class Graph {
 };
 
 void test_probabilite(int s, int nb, float p);
+int demande_nombre();
 Graph genere_barabasi_albert();
 
