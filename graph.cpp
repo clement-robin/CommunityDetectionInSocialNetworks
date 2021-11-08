@@ -19,6 +19,7 @@ Graph::Graph(int nb_som)
 {
     nombre_sommets = nb_som;
     degres_total=0;
+
     int **tab = new int*[nombre_sommets];
     for(int i = 0; i < nombre_sommets; ++i) {
         tab[i] = new int[nombre_sommets];
@@ -33,7 +34,7 @@ Graph::Graph(int nb_som)
 
     for (int i = 0; i < nb_som; i++)
     {
-        vector<int> v (0, NULL);
+        vector<int> v (0, {});
         liste_adjacence.insert ( std::pair <int,vector<int>>(i,v) );
     }
 }
@@ -140,7 +141,7 @@ void Graph::ajout_sommet()
 
     matrice_adjacence = tab;
 
-    vector<int> v (0, NULL);
+    vector<int> v (0, {});
     int s = liste_adjacence.size();
 
     liste_adjacence.insert ( std::pair <int,vector<int>>(s,v) );
