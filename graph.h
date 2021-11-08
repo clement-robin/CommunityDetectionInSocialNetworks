@@ -1,5 +1,8 @@
 #include <iostream>
 #include <time.h>
+#include <map>
+#include <string>
+#include <vector>
 
 
 using namespace std;
@@ -31,6 +34,7 @@ class Graph {
         int nombre_sommets;
         int ** matrice_adjacence;
         int degres_total;
+        map <int,vector<int>>liste_adjacence;
 };
 
 void test_probabilite(int s, int nb, float p);

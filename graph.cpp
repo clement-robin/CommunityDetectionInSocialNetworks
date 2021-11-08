@@ -30,6 +30,12 @@ Graph::Graph(int nb_som)
         }
     }
     matrice_adjacence = tab;
+
+    for (int i = 0; i < nb_som; i++)
+    {
+        vector<int> v (0, NULL);
+        liste_adjacence.insert ( std::pair <int,vector<int>>(i,v) );
+    }
 }
 
 /**
@@ -133,6 +139,11 @@ void Graph::ajout_sommet()
     }
 
     matrice_adjacence = tab;
+
+    vector<int> v (0, NULL);
+    int s = liste_adjacence.size();
+
+    liste_adjacence.insert ( std::pair <int,vector<int>>(s,v) );
 }
 
 /**
