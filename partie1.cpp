@@ -286,7 +286,7 @@ void test_probabilite(int sommets, int nombre_test, float proba)
 
 
 
-int main() {
+/*int main() {
     srand(time(NULL));
 
     //test_probabilite(10, 50000, 0.57);
@@ -297,4 +297,4 @@ int main() {
     g.afficher_graph_liste();
 
     return 0;
-}
+}*/

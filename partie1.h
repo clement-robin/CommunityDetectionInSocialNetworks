@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -28,6 +29,9 @@ class Graph {
         int getDegresTotal();
         int getNombreAretes();
         int getNombreSommets();
+        
+        // BronKerbosch
+        void BronKerbosch(vector<int> R, vector<int> P, vector<int> X);
 
 
     private:
@@ -35,6 +39,9 @@ class Graph {
         int ** matrice_adjacence;
         int degres_total;
         map <int,vector<int>>liste_adjacence;
+    
+    public:
+        vector<int> result_cliques;
 };
 
 void test_probabilite(int s, int nb, float p);
