@@ -13,7 +13,8 @@ class Graph {
         // Fonction de base pour le graphe
         Graph();
         Graph(int nb_som);
-        void afficher_graph(); 
+        void afficher_graph_matrice();
+        void afficher_graph_liste(); 
         void ajout_arrete(int a, int b);
         void ajout_sommet();
 

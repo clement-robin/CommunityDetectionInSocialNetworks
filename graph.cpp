@@ -42,7 +42,7 @@ Graph::Graph(int nb_som)
 /**
  * Fonction d'affichage du Graph dans la console avec sa matrice d'adjacence et le nombre de degres totals
  */
-void Graph::afficher_graph()
+void Graph::afficher_graph_matrice()
 {
     cout << "Graph :" << endl << endl;
     for(int i=0; i<nombre_sommets; i++) {
@@ -52,6 +52,24 @@ void Graph::afficher_graph()
         cout << endl;
     }
     cout << "Degres total = " << degres_total << endl;
+}
+
+void Graph::afficher_graph_liste()
+{
+    map<int, vector<int>>::iterator p;
+
+    cout << "Graph :" << endl << endl;
+    for(p = liste_adjacence.begin(); p != liste_adjacence.end(); p++)
+    {
+        cout << p->first << " : ";
+        for (long unsigned int i = 0; i < p->second.size(); i++)
+        {
+            cout << p->second[i] << " ";
+        }
+        cout << endl;
+        
+    }
+    cout << endl;
 }
 
 /**
@@ -65,6 +83,22 @@ void Graph::ajout_arrete(int a, int b)
     matrice_adjacence[a][b]=1;
     matrice_adjacence[b][a]=1;
     degres_total+=2;
+    map<int, vector<int>>::iterator p;
+
+    for(p = liste_adjacence.begin(); p != liste_adjacence.end(); p++)
+    {
+        vector<int>::iterator it;
+        //cout << endl << "size : " << p->second.size() << endl;
+        it = p->second.begin();
+        if(p->first == a)
+        {
+            it = p->second.insert(it, b);
+        }
+        if(p->first == b)
+        {
+            it = p->second.insert(it, a);
+        }
+    }
 }
 
 /**
@@ -96,6 +130,7 @@ void Graph::genere_graph_triangle()
     nombre_sommets = 3;
     g.genere_arrete_probabilite(1.0);
     matrice_adjacence = g.matrice_adjacence;
+    liste_adjacence = g.liste_adjacence;
     degres_total = g.degres_total;
 }
 
@@ -244,9 +279,12 @@ void test_probabilite(int sommets, int nombre_test, float proba)
 int main() {
     srand(time(NULL));
 
-    Graph g = Graph();
-    g = genere_barabasi_albert();
-    g.afficher_graph();
+    test_probabilite(10, 50000, 0.57);
+
+    /*Graph g = Graph(7);
+    g.genere_arrete_probabilite(0.5);
+    g.afficher_graph_matrice();
+    g.afficher_graph_liste();*/
 
     return 0;
 }
