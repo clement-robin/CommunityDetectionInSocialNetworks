@@ -153,14 +153,9 @@ int Graph::calcul_degre_sommet_matrice(int s)
  * return : compteur : nombre de degre du sommet
  */
 int Graph::calcul_degre_sommet_liste(int s)
-{
-    int compteur=0;
-    map<int, vector<int>>::iterator iteratorCle;
-
-    if (liste_adjacence.find(s) != liste_adjacence.end()) {
-        //liste_adjacence.find(s).
-    }
-    return compteur;
+{    
+    auto search = liste_adjacence.find(s);
+    return search->second.size();
 }
 
 /*
@@ -242,7 +237,7 @@ int demande_nombre()
  */
 Graph genere_barabasi_albert()
 {
-    /*int ans = demande_nombre();
+    int ans = demande_nombre();
 
     Graph g1 = Graph();
     g1.genere_graph_triangle();
@@ -252,16 +247,16 @@ Graph genere_barabasi_albert()
         g1.ajout_sommet();
         for (int j = 0; j < g1.getNombreSommets()-1; j++)
         {
-            float p = float (g1.calcul_degre_sommet(j)) / float (g1.getDegresTotal()) * 100;
+            float p = float (g1.calcul_degre_sommet_liste(j)) / float (g1.getDegresTotal()) * 100;
             float random = float(rand()%100);
             if(random <= p && ans>0) {
                 g1.ajout_arete(g1.getNombreSommets()-1,j);
                 ans--;
             }
         }
-       ans = demande_nombre();
+        ans = demande_nombre();
     }
-    return g1;*/
+    return g1;
 }
 
 /**
@@ -297,7 +292,7 @@ int main() {
     //test_probabilite(10, 50000, 0.57);
 
     Graph g = Graph();
-    g.genere_graph_triangle();
+    g = genere_barabasi_albert();
     g.afficher_graph_matrice();
     g.afficher_graph_liste();
 
