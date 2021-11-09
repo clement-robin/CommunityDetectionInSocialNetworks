@@ -15,19 +15,20 @@ class Graph {
         Graph(int nb_som);
         void afficher_graph_matrice();
         void afficher_graph_liste(); 
-        void ajout_arrete(int a, int b);
+        void ajout_arete(int a, int b);
         void ajout_sommet();
 
         //Generation d'un graphe
-        void genere_arrete_probabilite(float p);
+        void genere_arete_probabilite(float p);
         void genere_graph_triangle();
 
         // Calcul sur le graph
-        int calcul_degre_sommet(int s);
+        int calcul_degre_sommet_matrice(int s);
+        int calcul_degre_sommet_liste(int s);
 
         // Setters et Getters
         int getDegresTotal();
-        int getNombreArretes();
+        int getNombreAretes();
         int getNombreSommets();
 
 

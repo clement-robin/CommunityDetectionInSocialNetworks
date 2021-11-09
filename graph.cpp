@@ -78,27 +78,23 @@ void Graph::afficher_graph_liste()
  * Parametre(s) : a - sommets 1
  *                b - sommets 2
  */
-void Graph::ajout_arrete(int a, int b) 
+void Graph::ajout_arete(int a, int b) 
 {
     matrice_adjacence[a][b]=1;
     matrice_adjacence[b][a]=1;
     degres_total+=2;
-    map<int, vector<int>>::iterator p;
+    map<int, vector<int>>::iterator iteratorCle;
 
-    for(p = liste_adjacence.begin(); p != liste_adjacence.end(); p++)
-    {
-        vector<int>::iterator it;
-        //cout << endl << "size : " << p->second.size() << endl;
-        it = p->second.begin();
-        if(p->first == a)
-        {
-            it = p->second.insert(it, b);
-        }
-        if(p->first == b)
-        {
-            it = p->second.insert(it, a);
-        }
-    }
+    auto search = liste_adjacence.find(a);
+
+    vector<int>::iterator iteratorValeur;
+    iteratorValeur = search->second.begin();
+    search->second.insert(iteratorValeur, b);
+
+    search = liste_adjacence.find(b);
+
+    iteratorValeur = search->second.begin();
+    search->second.insert(iteratorValeur, a); 
 }
 
 /**
@@ -106,14 +102,14 @@ void Graph::ajout_arrete(int a, int b)
  * a partir d'un graph sans arete
  * Parametre(s) : p - probabilité entre 0 et 1 
  */
-void Graph::genere_arrete_probabilite(float p)
+void Graph::genere_arete_probabilite(float p)
 {
     for(int i=0; i<nombre_sommets; i++) {
         for(int j=0; j<i+1; j++) {
             if(j!=i) {
                 float random = float(rand()%100);
                 if(random<p*100.0) {
-                    this->ajout_arrete(i,j);
+                    this->ajout_arete(i,j);
                 }
             }
         }
@@ -128,7 +124,7 @@ void Graph::genere_graph_triangle()
 {
     Graph g = Graph(3);
     nombre_sommets = 3;
-    g.genere_arrete_probabilite(1.0);
+    g.genere_arete_probabilite(1.0);
     matrice_adjacence = g.matrice_adjacence;
     liste_adjacence = g.liste_adjacence;
     degres_total = g.degres_total;
@@ -139,7 +135,7 @@ void Graph::genere_graph_triangle()
  * Parametre(s) : s - sommet dont on souhaite connaitre le degre
  * return : compteur : nombre de degre du sommet
  */
-int Graph::calcul_degre_sommet(int s)
+int Graph::calcul_degre_sommet_matrice(int s)
 {
     int compteur=0;
     for(int i=0; i<nombre_sommets ; i++) {
@@ -150,6 +146,25 @@ int Graph::calcul_degre_sommet(int s)
     }
     return compteur;
 }
+
+/**
+ * Fonction qui compte le nombre de degres pour un sommet donne en parametre du Graph
+ * Parametre(s) : s - sommet dont on souhaite connaitre le degre
+ * return : compteur : nombre de degre du sommet
+ */
+int Graph::calcul_degre_sommet_liste(int s)
+{
+    int compteur=0;
+    map<int, vector<int>>::iterator iteratorCle;
+
+    if (liste_adjacence.find(s) != liste_adjacence.end()) {
+        //liste_adjacence.find(s).
+    }
+    return compteur;
+}
+
+/*
+*/
 
 /**
  * Fonction qui ajout un sommet a un Graph
@@ -195,7 +210,7 @@ int Graph::getDegresTotal()
  * Getter du champ degres_total/2 car un arete implique d'avoir 2 degres
  * return : degres_total/2 - nombre d'arete total du Graph
  */
-int Graph::getNombreArretes()
+int Graph::getNombreAretes()
 {
     return degres_total/2;
 }
@@ -216,7 +231,7 @@ int Graph::getNombreSommets()
 int demande_nombre()
 {
     int ans = 0;
-    cout << "Tapez un nombre m positif (-1 pour arreter)" << endl; // (nb d'arrete max a ajouter lors d'une generation)
+    cout << "Tapez un nombre m positif (-1 pour arreter)" << endl; // (nb d'aretes max a ajouter lors d'une generation)
     cin >> ans;
     return ans;
 }
@@ -227,7 +242,7 @@ int demande_nombre()
  */
 Graph genere_barabasi_albert()
 {
-    int ans = demande_nombre();
+    /*int ans = demande_nombre();
 
     Graph g1 = Graph();
     g1.genere_graph_triangle();
@@ -240,17 +255,17 @@ Graph genere_barabasi_albert()
             float p = float (g1.calcul_degre_sommet(j)) / float (g1.getDegresTotal()) * 100;
             float random = float(rand()%100);
             if(random <= p && ans>0) {
-                g1.ajout_arrete(g1.getNombreSommets()-1,j);
+                g1.ajout_arete(g1.getNombreSommets()-1,j);
                 ans--;
             }
         }
        ans = demande_nombre();
     }
-    return g1;
+    return g1;*/
 }
 
 /**
- * Fonction qui test si les probabilites sont bien respecte lors d'une generation de graph avec la fonction genere_arrete_probabilite(p)
+ * Fonction qui test si les probabilites sont bien respecte lors d'une generation de graph avec la fonction genere_arete_probabilite(p)
  * Cette fonction genere un nombre de Graph donne en parametre de taille donnee en parametre
  * le probabilite d'obtenir une arete entre 2 sommet est aussi donne en parametre
  * Le taux d'erreur entre la probabilite et le resultat est afficher
@@ -264,9 +279,9 @@ void test_probabilite(int sommets, int nombre_test, float proba)
 
     for(int i=0; i<nombre_test ; i++){
         Graph g = Graph(sommets);
-        g.genere_arrete_probabilite(proba);
-        float nb_arrete_max = float((sommets*(sommets-1))/2);
-        valeur_test += float(g.getNombreArretes()/nb_arrete_max);
+        g.genere_arete_probabilite(proba);
+        float nb_aretes_max = float((sommets*(sommets-1))/2);
+        valeur_test += float(g.getNombreAretes()/nb_aretes_max);
     }
     valeur_test = (valeur_test/nombre_test);
     cout << nombre_test << " tests - proba attendue : " << proba << " obtenue : " << valeur_test << endl;  
@@ -279,12 +294,12 @@ void test_probabilite(int sommets, int nombre_test, float proba)
 int main() {
     srand(time(NULL));
 
-    test_probabilite(10, 50000, 0.57);
+    //test_probabilite(10, 50000, 0.57);
 
-    /*Graph g = Graph(7);
-    g.genere_arrete_probabilite(0.5);
+    Graph g = Graph();
+    g.genere_graph_triangle();
     g.afficher_graph_matrice();
-    g.afficher_graph_liste();*/
+    g.afficher_graph_liste();
 
     return 0;
 }
