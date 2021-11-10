@@ -8,13 +8,13 @@ pour executer : ./graph
 pour supprimer les .o et executable : make clean
 
 1ere partie :
- - outils.cpp
- - outils.h
+ - graph.cpp
+ - graph.h
 
 2eme partie :
  - bronkerbosch.cpp
  - bronkerbosch.h
 
 3eme partie :
- - implementation.cpp
- - implementation.h
+ - partie3.cpp
+ - partie3.h
