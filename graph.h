@@ -36,6 +36,7 @@ class Graph {
         
         // BronKerbosch
         void BronKerbosch(vector<int> R, vector<int> P, vector<int> X);
+        void BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X);
 
 
     private:
