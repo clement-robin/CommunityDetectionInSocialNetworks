@@ -46,6 +46,9 @@ class Graph {
         map <int,vector<int>>liste_adjacence;
         map <int,vector<int>>liste_cliqueMax;
 
+    
+    public:
+        vector<int> result_cliques;
 };
 
 void test_probabilite(int s, int nb, float p);

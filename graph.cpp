@@ -328,3 +328,4 @@ void test_probabilite(int sommets, int nombre_test, float proba)
 
     return 0;
 }*/
+
