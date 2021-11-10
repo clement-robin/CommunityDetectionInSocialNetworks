@@ -1,4 +1,4 @@
-#include "partie1.h"
+#include "graph.h"
 
 using namespace std;
 
@@ -8,7 +8,8 @@ using namespace std;
 Graph::Graph()
 {
     nombre_sommets = 0;
-    degres_total=0;
+    degres_total = 0;
+    nombre_cliqueMax = 0;
 }
 
 /**
@@ -18,7 +19,8 @@ Graph::Graph()
 Graph::Graph(int nb_som)
 {
     nombre_sommets = nb_som;
-    degres_total=0;
+    degres_total = 0;
+    nombre_cliqueMax = 0;
 
     int **tab = new int*[nombre_sommets];
     for(int i = 0; i < nombre_sommets; ++i) {
@@ -68,6 +70,23 @@ void Graph::afficher_graph_liste()
         }
         cout << endl;
         
+    }
+    cout << endl;
+}
+
+/* affichage liste_cliqueMax */
+
+void Graph::afficher_cliqueMax(){
+
+    map<int, vector<int>>::iterator p;
+    for(p = liste_cliqueMax.begin(); p != liste_cliqueMax.end(); p++)
+    {
+        cout << "clique "<< p->first << " : ";
+        for (long unsigned int i = 0; i < p->second.size(); i++)
+        {
+            cout << p->second[i] << " ";
+        }
+        cout << endl;
     }
     cout << endl;
 }
@@ -219,6 +238,17 @@ int Graph::getNombreSommets()
     return nombre_sommets;
 }
 
+int Graph::getNombreCliqueMax()
+{
+    return nombre_cliqueMax;
+}
+
+void Graph::AddListeCliqueMax(vector<int>clique)
+{
+    liste_cliqueMax.insert ( std::pair <int,vector<int>>(nombre_cliqueMax,clique) );
+    nombre_cliqueMax++;
+}
+
 /**
  * Fonction qui demande a l'utilisateur de saisir un nombre positif et qui le retourne
  * return : ans - nombre saisi par l'utilisateur
@@ -286,7 +316,7 @@ void test_probabilite(int sommets, int nombre_test, float proba)
 
 
 
-int main() {
+/*int main() {
     srand(time(NULL));
 
     //test_probabilite(10, 50000, 0.57);
@@ -297,4 +327,4 @@ int main() {
     g.afficher_graph_liste();
 
     return 0;
-}
+}*/

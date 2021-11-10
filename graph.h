@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -12,7 +13,8 @@ class Graph {
         Graph();
         Graph(int nb_som);
         void afficher_graph_matrice();
-        void afficher_graph_liste(); 
+        void afficher_graph_liste();
+        void afficher_cliqueMax(); 
         void ajout_arete(int a, int b);
         void ajout_sommet();
 
@@ -28,16 +30,24 @@ class Graph {
         int getDegresTotal();
         int getNombreAretes();
         int getNombreSommets();
+        int getNombreCliqueMax();
+
+        void AddListeCliqueMax(vector<int>clique);
+        
+        // BronKerbosch
+        void BronKerbosch(vector<int> R, vector<int> P, vector<int> X);
 
 
     private:
         int nombre_sommets;
         int ** matrice_adjacence;
         int degres_total;
+        int nombre_cliqueMax;
         map <int,vector<int>>liste_adjacence;
+        map <int,vector<int>>liste_cliqueMax;
+
 };
 
 void test_probabilite(int s, int nb, float p);
 int demande_nombre();
 Graph genere_barabasi_albert();
-
