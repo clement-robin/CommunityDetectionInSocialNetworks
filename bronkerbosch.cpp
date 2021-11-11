@@ -67,14 +67,18 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
     vector<int> PinterX = {};
     vector<int> P_Nu = {};
 
+    int u = -1;
+    int val = 0;
+    int max = 0;
+
     if (P.empty() && X.empty()){
         AddListeCliqueMax(R);
     }
 
     // Construire le vecteur PinterX 
-    for (int i = 0; i < P.size(); i++)
+    for (long unsigned int i = 0; i < P.size(); i++)
     {
-        for (int j = 0; j < X.size(); j++)
+        for (long unsigned int j = 0; j < X.size(); j++)
         {
             if(P[i]==X[j]){
                 PinterX.push_back(P[i]);
@@ -82,13 +86,40 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
         } 
     }
 
-    // Choisir un noeud u dans PinterX
+    // Choisir un sommet u dans P U X tel que le nombre de sommet en commun entre P et les voisins de u soit maximal
+    for (long unsigned int i = 0; i < PinterX.size(); i++)
+    {
+        auto search = liste_adjacence.find(PinterX[i]);
+        for (long unsigned int j = 0; j < search->second.size(); j++)
+        {
+            for (long unsigned int k = 0; k < P.size(); k++)
+            {
+                if (search->second[j]==P[k])
+                {
+                    val++;
+                }
+            }
+        }
+        if (val>max)
+        {
+            u = PinterX[i];
+        }
+    }
 
-
+    cout << "u: " << u << endl;
 
     // Creation de P \ N(u)
-
-
+    auto search = liste_adjacence.find(u);
+    for (long unsigned int i = 0; i < P.size(); i++)
+    {
+        for (long unsigned int j = 0; j < search->second.size(); j++)
+        {
+            if (P[i]!=search->second[j])
+            {
+                P_Nu.push_back(P[i]);
+            }
+        }
+    }
 
     // Pour chaque sommet de P \ N(u)
     for (long unsigned int sommet = 0; sommet<P_Nu.size(); sommet++){
@@ -132,7 +163,7 @@ int main() {
 
     srand(time(NULL));
 
-    Graph g = Graph(6);
+    Graph g = Graph();
     vector<int> R;
     vector<int> P;
     vector<int> X;
@@ -146,7 +177,7 @@ int main() {
         P.push_back(i);
     }
     
-    g.BronKerbosch(R,P,X);
+    g.BronKerboschPivot(R,P,X);
     g.afficher_cliqueMax();
     
     return 0;
