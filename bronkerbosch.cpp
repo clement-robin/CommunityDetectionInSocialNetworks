@@ -46,8 +46,9 @@ void Graph::BronKerbosch(vector<int> R, vector<int> P, vector<int> X){
         unionR.push_back(P[0]);
         BronKerbosch(unionR,intersectionP,intersectionX);
         //P.erase(remove(P.begin(),P.end(),P[0]),P.end());
-        P.erase(P.begin());
         X.push_back(P[0]);
+        P.erase(P.begin());
+       
     }
 }
 
@@ -64,32 +65,35 @@ algorithme BronKerbosch2(R, P, X)
 
 void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
 {
-    vector<int> PinterX = {};
+    vector<int> PuX = {};
     vector<int> P_Nu = {};
 
     int u = -1;
     int val = 0;
     int max = 0;
 
-    if (P.empty() && X.empty()){
+    if (P.empty() && X.empty())
+    {
         AddListeCliqueMax(R);
-    }
+    }   
 
-    // Construire le vecteur PinterX 
+    // Construire le vecteur PUX 
     for (long unsigned int i = 0; i < P.size(); i++)
     {
         for (long unsigned int j = 0; j < X.size(); j++)
         {
-            if(P[i]==X[j]){
-                PinterX.push_back(P[i]);
+            if (P[i]!=X[j])
+            {
+                PuX.push_back(X[j]);
             }
-        } 
+        }
+        PuX.push_back(P[i]);
     }
 
     // Choisir un sommet u dans P U X tel que le nombre de sommet en commun entre P et les voisins de u soit maximal
-    for (long unsigned int i = 0; i < PinterX.size(); i++)
+    for (long unsigned int i = 0; i < PuX.size(); i++)
     {
-        auto search = liste_adjacence.find(PinterX[i]);
+        auto search = liste_adjacence.find(PuX[i]);
         for (long unsigned int j = 0; j < search->second.size(); j++)
         {
             for (long unsigned int k = 0; k < P.size(); k++)
@@ -102,7 +106,9 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
         }
         if (val>max)
         {
-            u = PinterX[i];
+            max = val;
+            val = 0;
+            u = PuX[i];
         }
     }
 
@@ -154,8 +160,8 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
         unionR.push_back(P_Nu[0]);
         BronKerbosch(unionR,intersectionP,intersectionX);
         //P.erase(remove(P.begin(),P.end(),P[0]),P.end());
-        P.erase(P.begin());
         X.push_back(P[0]);
+        P.erase(P.begin());
     }
 }
 
@@ -163,21 +169,33 @@ int main() {
 
     srand(time(NULL));
 
-    Graph g = Graph();
+    Graph g = Graph(6);
     vector<int> R;
     vector<int> P;
     vector<int> X;
 
-    g.genere_graph_triangle();
-    g.ajout_sommet();
-    g.ajout_arete(1,3);
+    //g.genere_graph_triangle();
+    //g.ajout_sommet();
+    //g.ajout_arete(1,3);
 
+    g.ajout_arete(0,1); 
+    g.ajout_arete(0,5);
+    g.ajout_arete(1,5);
+    g.ajout_arete(1,2);
+    g.ajout_arete(1,4);
+    g.ajout_arete(2,3);
+    g.ajout_arete(2,4);
+    g.ajout_arete(2,5);
+    g.ajout_arete(3,4);
+    g.ajout_arete(4,5);
+    
+    
     for (int i = 0; i < g.getNombreSommets(); i++)
     {
         P.push_back(i);
     }
     
-    g.BronKerboschPivot(R,P,X);
+    g.BronKerbosch(R,P,X);
     g.afficher_cliqueMax();
     
     return 0;
