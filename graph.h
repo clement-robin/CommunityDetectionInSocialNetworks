@@ -36,8 +36,14 @@ class Graph {
         
         // BronKerbosch
         void BronKerbosch(vector<int> R, vector<int> P, vector<int> X);
+
+        // BronKerboschPivot
         void BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X);
-        void BronKerboschDegenerence();
+
+        // BronKerboschDegenerescence
+        void BronKerboschDegenerescence(vector<int> R, vector<int> P, vector<int> X);
+
+        
 
     private:
         int nombre_sommets;
@@ -46,6 +52,7 @@ class Graph {
         int nombre_cliqueMax;
         map <int,vector<int>>liste_adjacence;
         map <int,vector<int>>liste_cliqueMax;
+        vector<int> ordre_degenerescence;
 
     
     public:
