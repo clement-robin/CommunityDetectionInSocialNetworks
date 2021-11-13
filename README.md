@@ -25,7 +25,7 @@ Voici la répartition des fichiers suivant les parties du projets :
 
 
 # Execution 
-Vous trouverez ci-dessous plusieurs exemples d'execution a modifier dans le **main** à la fin du fichier *bronkerbosch.cpp
+Vous trouverez ci-dessous plusieurs exemples d'execution a modifier dans le **main** à la fin du fichier *bronkerbosch.cpp*
 >ne pas oublier le `return 0` 
 
 ## Partie 1 : 
@@ -70,6 +70,8 @@ g.afficher_graph_liste();
 ### Test et vérification de la probabilité de la génération de graphes aléatoire
 
 ```cpp
+srand(time(NULL));
+
 test_probabilite(10, 15000, 0.63);<br>
 // 10 taille des graphes<br>
 // 150000 le nombre de graphes différents généré pour le test<br>
@@ -82,6 +84,8 @@ test_probabilite(10, 15000, 0.63);<br>
 ### Barabasi-Albert
 
 ```cpp
+srand(time(NULL));
+
 Graph g = genere_barabasi_albert();
 g.afficher_graph_liste();
 ```
@@ -99,7 +103,6 @@ Graph g = Graph();
 vector<int> R;
 vector<int> P;
 vector<int> X;
-vector<int> PuX = {};
 
 g.genere_graph_triangle();
 g.ajout_sommet();
@@ -107,7 +110,7 @@ g.ajout_arete(1,3);
 
 for (int i = 0; i < g.getNombreSommets(); i++)
 {
-    P.push_back(i);<
+    P.push_back(i);
 }
 
 g.BronKerbosch(R,P,X);

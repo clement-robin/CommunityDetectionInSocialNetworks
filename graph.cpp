@@ -14,7 +14,7 @@ Graph::Graph()
 
 /**
  * Constructeur de la classe Graph
- * Parametre(s) : nb_som - nombre de sommets voulu pour notre graphe
+ * @param nb_som nombre de sommets voulu pour notre graphe
  */
 Graph::Graph(int nb_som)
 {
@@ -42,7 +42,7 @@ Graph::Graph(int nb_som)
 }
 
 /**
- * Fonction d'affichage du Graph dans la console avec sa matrice d'adjacence et le nombre de degres totals
+ * Fonction d'affichage du Graph dans la console de sa matrice d'adjacence et le nombre de degres totals
  */
 void Graph::afficher_graph_matrice()
 {
@@ -56,6 +56,9 @@ void Graph::afficher_graph_matrice()
     cout << "Degres total = " << degres_total << endl;
 }
 
+/**
+ * Fonction d'affichage du Graph dans la console de sa liste d'adjacence
+ */
 void Graph::afficher_graph_liste()
 {
     map<int, vector<int>>::iterator p;
@@ -74,8 +77,9 @@ void Graph::afficher_graph_liste()
     cout << endl;
 }
 
-/* affichage liste_cliqueMax */
-
+/**
+ * Fonction d'affichage du Graph dans la console de toutes les clique max du graphe
+ */
 void Graph::afficher_cliqueMax(){
 
     map<int, vector<int>>::iterator p;
@@ -94,8 +98,8 @@ void Graph::afficher_cliqueMax(){
 /**
  * Fonction qui ajoute une arete au Graph entre les 2 sommets donnes en paramatres
  * puis ajoute 2 degres totals en plus de ceux existants
- * Parametre(s) : a - sommets 1
- *                b - sommets 2
+ * @param a sommets 1
+ * @param b sommets 2
  */
 void Graph::ajout_arete(int a, int b) 
 {
@@ -119,7 +123,7 @@ void Graph::ajout_arete(int a, int b)
 /**
  * Fonction qui genere un Graph avec une probabilité d'avoir une arete entre 2 sommets donnes en parametres
  * a partir d'un graph sans arete
- * Parametre(s) : p - probabilité entre 0 et 1 
+ * @param p probabilité entre 0 et 1 
  */
 void Graph::genere_arete_probabilite(float p)
 {
@@ -137,7 +141,7 @@ void Graph::genere_arete_probabilite(float p)
 
 /**
  * Fonction qui genere un Graph triangle :
- * Graph complet a 3 sommets
+ * Graphe complet a 3 sommets
  */
 void Graph::genere_graph_triangle()
 {
@@ -151,8 +155,8 @@ void Graph::genere_graph_triangle()
 
 /**
  * Fonction qui compte le nombre de degres pour un sommet donne en parametre du Graph
- * Parametre(s) : s - sommet dont on souhaite connaitre le degre
- * return : compteur : nombre de degre du sommet
+ * @param s sommet dont on souhaite connaitre le degre
+ * @return int compteur : nombre de degre du sommet
  */
 int Graph::calcul_degre_sommet_matrice(int s)
 {
@@ -168,8 +172,8 @@ int Graph::calcul_degre_sommet_matrice(int s)
 
 /**
  * Fonction qui compte le nombre de degres pour un sommet donne en parametre du Graph
- * Parametre(s) : s - sommet dont on souhaite connaitre le degre
- * return : compteur : nombre de degre du sommet
+ * @param s sommet dont on souhaite connaitre le degre
+ * @return int compteur : nombre de degre du sommet
  */
 int Graph::calcul_degre_sommet_liste(int s)
 {    
@@ -180,7 +184,7 @@ int Graph::calcul_degre_sommet_liste(int s)
 
 /**
  * Fonction qui ajout un sommet a un Graph
- * Parametre(s) : p - probabilité entre 0 et 1 
+ * @param p probabilité entre 0 et 1 
  */
 void Graph::ajout_sommet()
 {
@@ -211,7 +215,7 @@ void Graph::ajout_sommet()
 
 /**
  * Getter du champ degres_total
- * return : degres_total - nombre de degres total du Graph
+ * @return int degres_total : nombre de degres total du Graph
  */
 int Graph::getDegresTotal()
 {
@@ -220,7 +224,7 @@ int Graph::getDegresTotal()
 
 /**
  * Getter du champ degres_total/2 car un arete implique d'avoir 2 degres
- * return : degres_total/2 - nombre d'arete total du Graph
+ * @return int degres_total/2 : nombre d'arete total du Graph
  */
 int Graph::getNombreAretes()
 {
@@ -229,7 +233,7 @@ int Graph::getNombreAretes()
 
 /**
  * Getter du champ nombre_sommets
- * return : nombre_sommets - nombre de sommets du Graph
+ * @return int nombre_sommets : nombre de sommets du Graph
  */
 int Graph::getNombreSommets()
 {
@@ -238,13 +242,18 @@ int Graph::getNombreSommets()
 
 /**
  * Getter du champ nombre_cliqueMax
- * return : nombre_cliqueMax - nombre de cliques max du Graph
+ * @return int nombre_cliqueMax : nombre de cliques max du Graph
  */
 int Graph::getNombreCliqueMax()
 {
     return nombre_cliqueMax;
 }
 
+/**
+ * Fonction qui ajoute une clique à la liste des cliques max du Graph
+ * @param clique liste de sommets formant une clique
+
+ */
 void Graph::AddListeCliqueMax(vector<int>clique)
 {
     liste_cliqueMax.insert ( std::pair <int,vector<int>>(nombre_cliqueMax,clique) );
@@ -253,7 +262,7 @@ void Graph::AddListeCliqueMax(vector<int>clique)
 
 /**
  * Fonction qui demande a l'utilisateur de saisir un nombre positif et qui le retourne
- * return : ans - nombre saisi par l'utilisateur
+ * @return int ans : nombre saisi par l'utilisateur
  */
 int demande_nombre()
 {
@@ -266,7 +275,7 @@ int demande_nombre()
 /**
  * Fonction qui genere un Graph avec une probabilité d'avoir une arete entre 2 sommets selon le modele de Barabasi-Albert
  * a partir d'un graph triangle
- * return : g1 - graphe généré selon la methode de Barabasi-Albert
+ * @return Graph g1 : graphe généré selon la methode de Barabasi-Albert
  */
 Graph genere_barabasi_albert()
 {
@@ -297,9 +306,9 @@ Graph genere_barabasi_albert()
  * Cette fonction genere un nombre de Graph donne en parametre de taille donnee en parametre
  * le probabilite d'obtenir une arete entre 2 sommet est aussi donne en parametre
  * Le taux d'erreur entre la probabilite et le resultat est afficher
- * Parametre(s) : sommets - taille des graphes voulu
- *                nombre_test - nombre de graph que l'on souhaite generer
- *                proba - probabilité entre 0 et 1  
+ * @param sommets taille des graphes voulu
+ * @param nombre_test nombre de graph que l'on souhaite generer
+ * @param proba probabilité entre 0 et 1  
  */
 void test_probabilite(int sommets, int nombre_test, float proba)
 {

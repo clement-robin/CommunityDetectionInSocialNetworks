@@ -1,5 +1,12 @@
 #include "bronkerbosch.h"
 
+/**
+ * La fonction BronKerbosch perlet de trouver toutes les cliques max du graphe
+ * selon la méthode de Bron-Kerbosch
+ * @param R une ensemble de sommet
+ * @param P ensemble de sommet avec une partie de R
+ * @param X ensemble de sommet avec aucun sommet de R
+ */
 void Graph::BronKerbosch(vector<int> R, vector<int> P, vector<int> X){
 
     if (P.empty() && X.empty()){
@@ -46,6 +53,14 @@ void Graph::BronKerbosch(vector<int> R, vector<int> P, vector<int> X){
     }
 }
 
+
+/**
+ * La fonction BronKerboschPivot permet de trouver toutes les cliques max du graphe
+ * selon la méthode de Bron-Kerbosch mais cette fois-ci en utilisant un pivot
+ * @param R une ensemble de sommet
+ * @param P ensemble de sommet avec une partie de R
+ * @param X ensemble de sommet avec aucun sommet de R
+ */
 void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
 {
     vector<int> PuX = {};
@@ -160,6 +175,13 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
     }
 }
 
+/**
+ * La fonction BronKerboschPivot permet de trouver toutes les cliques max du graphe
+ * selon la méthode de Bron-Kerbosch mais cette fois-ci en utilisant un tri de parcourt des sommets par degenerescence
+ * @param R une ensemble de sommet
+ * @param P ensemble de sommet avec une partie de R
+ * @param X ensemble de sommet avec aucun sommet de R
+ */
 void Graph::BronKerboschDegenerescence(vector<int> R, vector<int> P, vector<int> X)
 {
     /*
@@ -209,9 +231,11 @@ algorithme BronKerbosch3(G)
         
 */
 
+/**
+ * Fonnction main qui permet de tester toutes les autres fonctions
+ * @return int 0
+ */
 int main() {
-
-    srand(time(NULL));
 
     Graph g = Graph();
     vector<int> R;
@@ -222,27 +246,13 @@ int main() {
     g.ajout_sommet();
     g.ajout_arete(1,3);
 
-    /*
-    g.ajout_arete(0,1); 
-    g.ajout_arete(0,5);
-    g.ajout_arete(1,5);
-    g.ajout_arete(1,2);
-    g.ajout_arete(1,4);
-    g.ajout_arete(2,3);
-    g.ajout_arete(2,4);
-    g.ajout_arete(2,5);
-    g.ajout_arete(3,4);
-    g.ajout_arete(4,5);
-    */
-    
     for (int i = 0; i < g.getNombreSommets(); i++)
     {
         P.push_back(i);
     }
-    
-    //g.BronKerboschPivot(R,P,X);
-    //g.afficher_cliqueMax();
 
+    g.BronKerbosch(R,P,X);
+    g.afficher_cliqueMax();
 
     
     return 0;
