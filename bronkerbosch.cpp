@@ -160,13 +160,9 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
     }
 }
 
-void Graph::BronKerboschDegenerence()
+void Graph::BronKerboschDegenerescence(vector<int> R, vector<int> P, vector<int> X)
 {
-    /*vector<int> R;
-    vector<int> P;
-    vector<int> X;
-    vector<int> PuX = {};
-
+    /*
 
     vector<int> intersectionP = {};
     vector<int> intersectionX = {};
@@ -201,16 +197,6 @@ void Graph::BronKerboschDegenerence()
 }
 
 /*
-algorithme BronKerbosch2(R, P, X)
-    si P et X sont vides alors
-        déclarer R clique maximale
-    choisir un sommet pivot u dans P ⋃ X
-    pour tout sommet v dans P \ N(u) faire
-        BronKerbosch2(R ⋃ {v}, P ⋂ N(v), X ⋂ N(v))
-        P := P \ {v}
-        X := X ⋃ {v}
-
-
 
 algorithme BronKerbosch3(G)
     P = V(G)
@@ -219,7 +205,9 @@ algorithme BronKerbosch3(G)
     pour tout sommet v visités dans un ordre de dégénérescence de G faire
         BronKerbosch2({v}, P ⋂ N(v), X ⋂ N(v))
         P := P \ {v}
-        X := X ⋃ {v}*/
+        X := X ⋃ {v}
+        
+*/
 
 int main() {
 
@@ -229,7 +217,6 @@ int main() {
     vector<int> R;
     vector<int> P;
     vector<int> X;
-    vector<int> PuX = {};
 
     g.genere_graph_triangle();
     g.ajout_sommet();
@@ -253,8 +240,10 @@ int main() {
         P.push_back(i);
     }
     
-    g.BronKerboschPivot(R,P,X);
-    g.afficher_cliqueMax();
+    //g.BronKerboschPivot(R,P,X);
+    //g.afficher_cliqueMax();
+
+
     
     return 0;
 }
