@@ -103,8 +103,6 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
         }
     }
 
-    cout << u << endl;
-
     // Creation de P \ N(u)
     bool ajout = true;
     auto search = liste_adjacence.find(u);
@@ -164,7 +162,7 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
 
 void Graph::BronKerboschDegenerence()
 {
-    vector<int> R;
+    /*vector<int> R;
     vector<int> P;
     vector<int> X;
     vector<int> PuX = {};
@@ -199,7 +197,7 @@ void Graph::BronKerboschDegenerence()
 
     BronKerboschPivot(unionR,intersectionP,intersectionX);
     P.erase(remove(P.begin(),P.end(),P_Nu[0]),P.end());
-    X.push_back(P_Nu[0]);
+    X.push_back(P_Nu[0]);*/
 }
 
 /*
@@ -224,8 +222,39 @@ algorithme BronKerbosch3(G)
         X := X ⋃ {v}*/
 
 int main() {
+
     srand(time(NULL));
 
+    Graph g = Graph();
+    vector<int> R;
+    vector<int> P;
+    vector<int> X;
+    vector<int> PuX = {};
 
+    g.genere_graph_triangle();
+    g.ajout_sommet();
+    g.ajout_arete(1,3);
+
+    /*
+    g.ajout_arete(0,1); 
+    g.ajout_arete(0,5);
+    g.ajout_arete(1,5);
+    g.ajout_arete(1,2);
+    g.ajout_arete(1,4);
+    g.ajout_arete(2,3);
+    g.ajout_arete(2,4);
+    g.ajout_arete(2,5);
+    g.ajout_arete(3,4);
+    g.ajout_arete(4,5);
+    */
+    
+    for (int i = 0; i < g.getNombreSommets(); i++)
+    {
+        P.push_back(i);
+    }
+    
+    g.BronKerboschPivot(R,P,X);
+    g.afficher_cliqueMax();
+    
     return 0;
 }
