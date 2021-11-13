@@ -25,8 +25,8 @@ Voici la répartition des fichiers suivant les parties du projets :
 
 
 # Execution 
-Vous trouverez ci-dessous plusieurs exemples d'execution:
-(ne pas oublier le `return 0` dans le **main** à la fin du fichier bronkerboshc.cpp)
+Vous trouverez ci-dessous plusieurs exemples d'execution a modifier dans le **main** à la fin du fichier *bronkerbosch.cpp
+>ne pas oublier le `return 0` 
 
 ## Partie 1 : 
 
@@ -82,32 +82,32 @@ test_probabilite(10, 15000, 0.63);<br>
 
 # - Bron-Kerbosch :
 
-    ```cpp
-    Graph g = Graph();
-    vector<int> R;
-    vector<int> P;
-    vector<int> X;
-    vector<int> PuX = {};
+```cpp
+Graph g = Graph();
+vector<int> R;
+vector<int> P;
+vector<int> X;
+vector<int> PuX = {};
 
-    g.genere_graph_triangle();
-    g.ajout_sommet();
-    g.ajout_arete(1,3);
+g.genere_graph_triangle();
+g.ajout_sommet();
+g.ajout_arete(1,3);
 
-    for (int i = 0; i < g.getNombreSommets(); i++)
-    {
-        P.push_back(i);<
-    }
-    
-    g.BronKerbosch(R,P,X);
-    g.afficher_cliqueMax();
-    ```
+for (int i = 0; i < g.getNombreSommets(); i++)
+{
+    P.push_back(i);<
+}
+
+g.BronKerbosch(R,P,X);
+g.afficher_cliqueMax();
+```
 ### - Bron-Kerbosch avec pivot :
 
-    l'execution est la meme, on remplace seulement:
-        ```cpp
-        g.BronKerbosch(R,P,X);
-        ```
-    par
-        ```cpp
-        g.BronKerboschPivot(R,P,X);
-        ```
+l'execution est la meme, on remplace seulement:
+```cpp
+g.BronKerbosch(R,P,X);
+```
+par
+```cpp
+g.BronKerboschPivot(R,P,X);
+```
