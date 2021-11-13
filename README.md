@@ -29,7 +29,7 @@ Pour la partie 1 :
 
     srand(time(NULL));
 
-    Graph g = Graph(3);
+    Graph g = Graph(3);<br>
     g.ajout_sommet();
     g.ajout_sommet();
     g.ajout_sommet();
