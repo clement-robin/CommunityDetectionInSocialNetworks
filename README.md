@@ -27,7 +27,7 @@ Pour la partie 1 :
 
 - Génération de graphes :
 
-    `srand(time(NULL));`<br/>
+    srand(time(NULL));
 
     `Graph g = Graph(3);`<br/>
     `g.ajout_sommet();`<br/>
