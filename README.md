@@ -27,12 +27,12 @@ Pour la partie 1 :
 
 - Génération de graphes :
 
-    `srand(time(NULL));`
+    `srand(time(NULL));`<br/>
 
-    `Graph g = Graph(3);`
-    `g.ajout_sommet();`
-    `g.ajout_sommet();`
-    `g.ajout_sommet();`
+    `Graph g = Graph(3);`<br/>
+    `g.ajout_sommet();`<br/>
+    `g.ajout_sommet();`<br/>
+    `g.ajout_sommet();`<br/>
 
 
     `g.ajout_arete(1,3);`
