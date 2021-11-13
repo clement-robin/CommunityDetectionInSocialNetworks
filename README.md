@@ -71,7 +71,7 @@ cf. explication de l'algorithme de la fonction dans le rapport
 
 Pour la partie 2 :
 
-- Bron-Kerbosch
+- Bron-Kerbosch :
 
     Graph g = Graph();<br>
     vector<int> R;<br>
@@ -91,7 +91,7 @@ Pour la partie 2 :
     g.BronKerbosch(R,P,X);<br>
     g.afficher_cliqueMax();<br>
 
-- Bron-Kerbosch
+- Bron-Kerbosch avec pivot
     l'execution est la meme, on remplace seulement:<br>
         g.BronKerbosch(R,P,X);<br>
     par<br>
