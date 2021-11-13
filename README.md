@@ -67,5 +67,32 @@ Pour la partie 1 :
     // 150000 le nombre de graphes différents généré pour le test<br>
     // 0.63 la probabilite testée<br>
 
-<t>cf. explication de l'algorithme de la fonction dans le rapport
+cf. explication de l'algorithme de la fonction dans le rapport
 
+Pour la partie 2 :
+
+- Bron-Kerbosch
+
+    Graph g = Graph();<br>
+    vector<int> R;<br>
+    vector<int> P;<br>
+    vector<int> X;<br>
+    vector<int> PuX = {};<br>
+
+    g.genere_graph_triangle();<br>
+    g.ajout_sommet();<br>
+    g.ajout_arete(1,3);<br>
+
+    for (int i = 0; i < g.getNombreSommets(); i++)<br>
+    {<br>
+        P.push_back(i);<br>
+    }<br>
+    
+    g.BronKerbosch(R,P,X);<br>
+    g.afficher_cliqueMax();<br>
+
+- Bron-Kerbosch
+    l'execution est la meme, on remplace seulement:<br>
+        g.BronKerbosch(R,P,X);<br>
+    par<br>
+        g.BronKerboschPivot(R,P,X);<br>
