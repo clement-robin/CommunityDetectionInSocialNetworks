@@ -107,12 +107,12 @@ void Graph::ajout_arete(int a, int b)
     auto search = liste_adjacence.find(a);
 
     vector<int>::iterator iteratorValeur;
-    iteratorValeur = search->second.begin();
+    iteratorValeur = search->second.end();
     search->second.insert(iteratorValeur, b);
 
     search = liste_adjacence.find(b);
 
-    iteratorValeur = search->second.begin();
+    iteratorValeur = search->second.end();
     search->second.insert(iteratorValeur, a); 
 }
 

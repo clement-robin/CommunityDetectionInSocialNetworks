@@ -1,26 +1,21 @@
 #include "bronkerbosch.h"
 
-/*
-    - Bron-Kerbosch
-    - Degenerecence
-    - Bron-Kerbosch pivot
-
-*/
-
 void Graph::BronKerbosch(vector<int> R, vector<int> P, vector<int> X){
 
     if (P.empty() && X.empty()){
         AddListeCliqueMax(R);
     }
 
+    vector<int> Pparcours = P;
+
     // Pour chaque sommet de P
-    for (long unsigned int sommet = 0; sommet<P.size(); sommet++){
+    for (long unsigned int sommet = 0; sommet<Pparcours.size(); sommet++){
 
         vector<int> intersectionP = {};
         vector<int> intersectionX = {};
         vector<int> unionR = {};
 
-        int v = P[0];
+        int v = Pparcours[sommet];
         auto search = liste_adjacence.find(v);
         
         // Pour chaque voisin de "sommet"
@@ -46,22 +41,10 @@ void Graph::BronKerbosch(vector<int> R, vector<int> P, vector<int> X){
         unionR = R;
         unionR.push_back(v);
         BronKerbosch(unionR,intersectionP,intersectionX);
-        //P.erase(remove(P.begin(),P.end(),P[0]),P.end());
-        P.erase(P.begin());
+        P.erase(remove(P.begin(),P.end(),v),P.end());
         X.push_back(v);
     }
 }
-
-/*
-algorithme BronKerbosch2(R, P, X)
-    si P et X sont vides alors
-        déclarer R clique maximale
-    choisir un sommet pivot u dans P ⋃ X
-    pour tout sommet v dans P \ N(u) faire
-        BronKerbosch2(R ⋃ {v}, P ⋂ N(v), X ⋂ N(v))
-        P := P \ {v}
-        X := X ⋃ {v}
-*/
 
 void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
 {
@@ -76,21 +59,7 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
     {
         AddListeCliqueMax(R);
     }
-
-    cout << "Size P: "<< P.size() << endl;
-    for (long unsigned int i = 0; i < P.size(); i++)
-    {
-        cout << P[i] <<" ";
-    }
-    cout << endl;
-
-    cout << "Size X: "<< X.size() << endl;
-    for (long unsigned int i = 0; i < X.size(); i++)
-    {
-        cout << X[i] <<" ";
-    }
-    cout << endl;
-
+    
     // Construire le vecteur PuX 
     for (long unsigned int i = 0; i < P.size(); i++)
     {
@@ -98,20 +67,19 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
     }
     for (long unsigned int i = 0; i < X.size(); i++)
     {   
-        vector<int>::iterator it;
-        it = find(PuX.begin(),PuX.end(),X[i]);
-        if(it!=PuX.end()){
+        if(!count(P.begin(), P.end(), X[i])){
             PuX.push_back(X[i]);
         }
     }
-    
-    // Affichage PuX
-    cout << "Size PuX: "<< PuX.size() << endl;
-    for (long unsigned int i = 0; i < PuX.size(); i++)
+
+    if (!P.empty()) 
     {
-        cout << PuX[i] <<" ";
+        u = P[0];
     }
-    cout << endl;
+    else if (!X.empty()) 
+    {
+        u = X[0];
+    }
 
     // Choisir un sommet u dans P U X tel que le nombre de sommet en commun entre P et les voisins de u soit maximal
     for (long unsigned int i = 0; i < PuX.size(); i++)
@@ -135,7 +103,7 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
         }
     }
 
-    cout << "u: " << u << endl;
+    cout << u << endl;
 
     // Creation de P \ N(u)
     bool ajout = true;
@@ -156,15 +124,6 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
         ajout = true;
     }
 
-    // Affichage P \ N(u)
-    cout << "Size P - N(u): "<< P_Nu.size() << endl;
-    for (long unsigned int i = 0; i < P_Nu.size(); i++)
-    {
-        cout << P_Nu[i] <<" ";
-    }
-    cout << endl;
-    
-
     // Pour chaque sommet de P \ N(u)
     for (long unsigned int sommet = 0; sommet<P_Nu.size(); sommet++){
 
@@ -172,7 +131,8 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
         vector<int> intersectionX = {};
         vector<int> unionR = {};
 
-        auto search = liste_adjacence.find(P_Nu[0]);
+        int v = P_Nu[sommet];
+        auto search = liste_adjacence.find(v);
         
         // Pour chaque voisin de "sommet"
         for (long unsigned int i = 0; i<search->second.size(); i++)
@@ -195,35 +155,10 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
         }
 
         unionR = R;
-        unionR.push_back(P_Nu[0]);
-         
-        // Affichage de l'intersection P)
-        cout << "Size intersectionP: "<< intersectionP.size() << endl;
-        for (long unsigned int i = 0; i < intersectionP.size(); i++)
-        {
-            cout << intersectionP[i] <<" ";
-        }
-        cout << endl;
-
-        // Affichage de l'intersection X)
-        cout << "Size intersectionX: "<< intersectionX.size() << endl;
-        for (long unsigned int i = 0; i < intersectionX.size(); i++)
-        {
-            cout << intersectionX[i] <<" ";
-        }
-        cout << endl;
-
-        // Affichage de l'union R)
-        cout << "Size unionR: "<< unionR.size() << endl;
-        for (long unsigned int i = 0; i < unionR.size(); i++)
-        {
-            cout << unionR[i] <<" ";
-        }
-        cout << endl;
-
+        unionR.push_back(v);
         BronKerboschPivot(unionR,intersectionP,intersectionX);
-        P.erase(remove(P.begin(),P.end(),P_Nu[0]),P.end());
-        X.push_back(P_Nu[0]);
+        P.erase(remove(P.begin(),P.end(),v),P.end());
+        X.push_back(v);
     }
 }
 
@@ -235,12 +170,14 @@ int main() {
     vector<int> R;
     vector<int> P;
     vector<int> X;
+    vector<int> PuX = {};
 
     g.genere_graph_triangle();
     g.ajout_sommet();
     g.ajout_arete(1,3);
 
-    /*g.ajout_arete(0,1); 
+    /*
+    g.ajout_arete(0,1); 
     g.ajout_arete(0,5);
     g.ajout_arete(1,5);
     g.ajout_arete(1,2);
@@ -249,8 +186,8 @@ int main() {
     g.ajout_arete(2,4);
     g.ajout_arete(2,5);
     g.ajout_arete(3,4);
-    g.ajout_arete(4,5);*/
-    
+    g.ajout_arete(4,5);
+    */
     
     for (int i = 0; i < g.getNombreSommets(); i++)
     {
