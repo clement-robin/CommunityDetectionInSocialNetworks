@@ -177,8 +177,6 @@ int Graph::calcul_degre_sommet_liste(int s)
     return search->second.size();
 }
 
-/*
-*/
 
 /**
  * Fonction qui ajout un sommet a un Graph
@@ -316,16 +314,5 @@ void test_probabilite(int sommets, int nombre_test, float proba)
 
 
 
-/*int main() {
-    srand(time(NULL));
 
-    //test_probabilite(10, 50000, 0.57);
-
-    Graph g = Graph();
-    g = genere_barabasi_albert();
-    g.afficher_graph_matrice();
-    g.afficher_graph_liste();
-
-    return 0;
-}*/
 

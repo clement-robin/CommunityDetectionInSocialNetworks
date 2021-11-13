@@ -227,38 +227,70 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
     }
 }
 
-int main() {
-
-    srand(time(NULL));
-
-    Graph g = Graph();
+void Graph::BronKerboschDegenerence()
+{
     vector<int> R;
     vector<int> P;
     vector<int> X;
 
-    g.genere_graph_triangle();
-    g.ajout_sommet();
-    g.ajout_arete(1,3);
 
-    /*g.ajout_arete(0,1); 
-    g.ajout_arete(0,5);
-    g.ajout_arete(1,5);
-    g.ajout_arete(1,2);
-    g.ajout_arete(1,4);
-    g.ajout_arete(2,3);
-    g.ajout_arete(2,4);
-    g.ajout_arete(2,5);
-    g.ajout_arete(3,4);
-    g.ajout_arete(4,5);*/
+    vector<int> intersectionP = {};
+    vector<int> intersectionX = {};
+    vector<int> unionR = {};
+    vector<int> PuX = {};
+    vector<int> P_Nu = {};
+
+    auto search = liste_adjacence.find(P_Nu[0]);
     
-    
-    for (int i = 0; i < g.getNombreSommets(); i++)
+
+    for (long unsigned int i = 0; i<search->second.size(); i++)
     {
-        P.push_back(i);
+        for (long unsigned int j = 0; j < P.size(); j++)
+        {
+            if (P[j] == search->second[i]){
+                intersectionP.push_back(P[j]);
+            }
+        }
+
+        // Création de l'intersection X
+        for (long unsigned int j = 0; j < X.size(); j++)
+        {
+            if (search->second[i] == X[j]){
+                intersectionX.push_back(X[j]);
+            }
+        }
     }
-    
-    g.BronKerboschPivot(R,P,X);
-    g.afficher_cliqueMax();
-    
+
+    BronKerboschPivot(unionR,intersectionP,intersectionX);
+    P.erase(remove(P.begin(),P.end(),P_Nu[0]),P.end());
+    X.push_back(P_Nu[0]);
+}
+
+/*
+algorithme BronKerbosch2(R, P, X)
+    si P et X sont vides alors
+        déclarer R clique maximale
+    choisir un sommet pivot u dans P ⋃ X
+    pour tout sommet v dans P \ N(u) faire
+        BronKerbosch2(R ⋃ {v}, P ⋂ N(v), X ⋂ N(v))
+        P := P \ {v}
+        X := X ⋃ {v}
+
+
+
+algorithme BronKerbosch3(G)
+    P = V(G)
+    R = Ø
+    X = Ø
+    pour tout sommet v visités dans un ordre de dégénérescence de G faire
+        BronKerbosch2({v}, P ⋂ N(v), X ⋂ N(v))
+        P := P \ {v}
+        X := X ⋃ {v}*/
+
+int main() {
+    srand(time(NULL));
+
+    test_probabilite(10,15000, 0.63);
+
     return 0;
 }

@@ -27,7 +27,7 @@ Pour la partie 1 :
 
 - Génération de graphes :
 
-    `srand(time(NULL));
+    srand(time(NULL));
 
     Graph g = Graph(3);
     g.ajout_sommet();
@@ -48,12 +48,12 @@ Pour la partie 1 :
     g.ajout_arete(4,5);
 
     g.afficher_graph_matrice(); //affiche la matrice d'adjacence du graphe
-    g.afficher_graph_liste(); //affiche la liste d'adjacence du graphe`
+    g.afficher_graph_liste(); //affiche la liste d'adjacence du graphe
 
 
 - Génération aléatoire de graphes :
 
-    `srand(time(NULL));
+    srand(time(NULL));
 
     Graph g = Graph(10);
     g.genere_arete_probabilite(0.56);
@@ -62,10 +62,10 @@ Pour la partie 1 :
     g.afficher_graph_liste(); //affiche la liste d'adjacence du graphe`
 
 - Test et vérification de la probabilité de la génération de graphes aléatoire
-    `test_probabilite(10, 15000, 0.63);
+    test_probabilite(10, 15000, 0.63);
     // 10 taille des graphes
     // 150000 le nombre de graphes différents généré pour le test
-    // 0.63 la probabilite testée`
+    // 0.63 la probabilite testée
 
 cf. explication de l'algorithme de la fonction dans le rapport
 
