@@ -229,13 +229,17 @@ int Graph::getNombreAretes()
 
 /**
  * Getter du champ nombre_sommets
- * return : nombre_sommets - nombre de nombre_sommets du Graph
+ * return : nombre_sommets - nombre de sommets du Graph
  */
 int Graph::getNombreSommets()
 {
     return nombre_sommets;
 }
 
+/**
+ * Getter du champ nombre_cliqueMax
+ * return : nombre_cliqueMax - nombre de cliques max du Graph
+ */
 int Graph::getNombreCliqueMax()
 {
     return nombre_cliqueMax;
@@ -261,7 +265,8 @@ int demande_nombre()
 
 /**
  * Fonction qui genere un Graph avec une probabilité d'avoir une arete entre 2 sommets selon le modele de Barabasi-Albert
- * a partir d'un graph sans arete
+ * a partir d'un graph triangle
+ * return : g1 - graphe généré selon la methode de Barabasi-Albert
  */
 Graph genere_barabasi_albert()
 {

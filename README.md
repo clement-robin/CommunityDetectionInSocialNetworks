@@ -2,7 +2,7 @@
 Projet IATIC 4 - Détection de communautés dans des réseaux sociaux
 
 # Compilation
-Makefile pour compiler les fichiers (make necessairement installer sur la machine)
+Makefile pour compiler les fichiers (make doit necessairement être installé sur la machine)
 
 pour compiler : **make**
 pour executer : **./graph**
@@ -51,8 +51,8 @@ g.ajout_arete(2,5);
 g.ajout_arete(3,4);
 g.ajout_arete(4,5);
 
-g.afficher_graph_matrice(); //affiche la matrice d'adjacence du graphe<br>
-g.afficher_graph_liste(); //affiche la liste d'adjacence du graphe<br>
+g.afficher_graph_matrice(); //affiche la matrice d'adjacence du graphe
+g.afficher_graph_liste(); //affiche la liste d'adjacence du graphe
 ```
 
 ### Génération aléatoire de graphes :
@@ -60,11 +60,11 @@ g.afficher_graph_liste(); //affiche la liste d'adjacence du graphe<br>
 ```cpp
 srand(time(NULL));
 
-Graph g = Graph(10);<br>
+Graph g = Graph(10);
 g.genere_arete_probabilite(0.56);
 
-g.afficher_graph_matrice(); //affiche la matrice d'adjacence du graphe
-g.afficher_graph_liste(); //affiche la liste d'adjacence du graphe
+g.afficher_graph_matrice();
+g.afficher_graph_liste();
 ```
 
 ### Test et vérification de la probabilité de la génération de graphes aléatoire
@@ -78,9 +78,21 @@ test_probabilite(10, 15000, 0.63);<br>
 
 > cf. explication de l'algorithme de la fonction dans le rapport
 
-## Partie 2 : 
 
-# - Bron-Kerbosch :
+### Barabasi-Albert
+
+```cpp
+Graph g = genere_barabasi_albert();
+g.afficher_graph_liste();
+```
+L'utilisateur devra indique le nombre d'arètes maximums que l'on peut ajouter pour un sommet.
+>Chaque demande impliquera l'ajout d'un sommet et la génération des arètes selon la méthode de Barabasi-Albert.
+
+Si l'utilisateur souhaite stoper la génération et afficher la liste d'adjacence du graphe, il lui suifit de taper `-1`
+
+# Partie 2 : 
+
+### - Bron-Kerbosch :
 
 ```cpp
 Graph g = Graph();
@@ -103,7 +115,7 @@ g.afficher_cliqueMax();
 ```
 ### - Bron-Kerbosch avec pivot :
 
-l'execution est la meme, on remplace seulement:
+l'execution est la même que pour Bron-Kerbosch, on remplace seulement :
 ```cpp
 g.BronKerbosch(R,P,X);
 ```
@@ -111,3 +123,5 @@ par
 ```cpp
 g.BronKerboschPivot(R,P,X);
 ```
+
+### - Dégénérécence de Bron-Kerbosch :
