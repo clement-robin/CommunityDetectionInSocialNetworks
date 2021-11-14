@@ -119,8 +119,6 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
         }
     }
 
-    cout << u << endl;
-
     // Creation de P \ N(u)
     bool ajout = true;
     auto search = liste_adjacence.find(u);
@@ -214,11 +212,6 @@ void Graph::genOrdreDegenerescence()
         g2.suppr_sommet(A[0]);
         A = g2.triOrdreDegenerescence();
     }
-
-    for (long unsigned int i = 0; i < ordre_degenerescence.size(); i++)
-    {
-        cout << ordre_degenerescence[i] << " ";
-    } 
 }
 
 void Graph::BronKerboschDegenerescence()
@@ -274,7 +267,7 @@ void Graph::BronKerboschDegenerescence()
 
 
 /**
- * Fonnction main qui permet de tester toutes les autres fonctions
+ * Fonction main qui permet de tester toutes les autres fonctions
  * @return int 0
  */
 int main() {
