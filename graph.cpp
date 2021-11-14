@@ -209,6 +209,46 @@ void Graph::ajout_sommet()
     liste_adjacence.insert ( std::pair <int,vector<int>>(s,v) );
 }
 
+
+// Supprimer un sommet dans un graphe;
+void Graph::suppr_sommet(int sommet)
+{
+    int **tab = new int*[nombre_sommets];
+    for(int i = 0; i < nombre_sommets; ++i) {
+        tab[i] = new int[nombre_sommets];
+    }
+
+    for(int i=0; i<nombre_sommets; i++) {
+        for(int j=0; j<nombre_sommets; j++) {
+            if (i!=sommet && j!=sommet)
+            {
+                tab[i][j]=matrice_adjacence[i][j];
+            }
+            else
+            {
+                tab[i][j]=0;
+            }
+        }
+    }
+
+    matrice_adjacence = tab;
+    auto search = liste_adjacence.find(sommet);
+
+    degres_total = degres_total - (2*search->second.size());
+
+    for (long unsigned int i = 0; i < search->second.size(); i++)
+    {
+        for (long unsigned int j = 0; j < liste_adjacence[search->second[i]].size(); j++) 
+        {
+            if (liste_adjacence[search->second[i]][j] == sommet)
+            {
+                liste_adjacence[search->second[i]].erase(liste_adjacence[search->second[i]].begin()+j);
+            }     
+        }   
+    } 
+    liste_adjacence.erase(sommet); 
+}
+
 /**
  * Getter du champ degres_total
  * return : degres_total - nombre de degres total du Graph
@@ -245,6 +285,11 @@ void Graph::AddListeCliqueMax(vector<int>clique)
 {
     liste_cliqueMax.insert ( std::pair <int,vector<int>>(nombre_cliqueMax,clique) );
     nombre_cliqueMax++;
+}
+
+map <int,vector<int>> Graph::getListeAdjacence()
+{
+    return liste_adjacence;
 }
 
 /**
@@ -286,6 +331,7 @@ Graph genere_barabasi_albert()
     }
     return g1;
 }
+
 
 /**
  * Fonction qui test si les probabilites sont bien respecte lors d'une generation de graph avec la fonction genere_arete_probabilite(p)

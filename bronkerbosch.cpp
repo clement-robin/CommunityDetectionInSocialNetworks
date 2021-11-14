@@ -58,6 +58,7 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
     if (P.empty() && X.empty())
     {
         AddListeCliqueMax(R);
+        return;
     }
     
     // Construire le vecteur PuX 
@@ -102,6 +103,8 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
             u = PuX[i];
         }
     }
+
+    cout << u << endl;
 
     // Creation de P \ N(u)
     bool ajout = true;
@@ -160,54 +163,100 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
     }
 }
 
-void Graph::BronKerboschDegenerescence(vector<int> R, vector<int> P, vector<int> X)
+vector <int> Graph::triOrdreDegenerescence() 
 {
-    /*
+    vector<int> A = {};
+    map<int, vector<int>>::iterator iterator_map;
 
-    vector<int> intersectionP = {};
-    vector<int> intersectionX = {};
-    vector<int> unionR = {};
-    vector<int> PuX = {};
-    vector<int> P_Nu = {};
-
-    auto search = liste_adjacence.find(P_Nu[0]);
-    
-
-    for (long unsigned int i = 0; i<search->second.size(); i++)
+    for (iterator_map = liste_adjacence.begin(); iterator_map != liste_adjacence.end(); iterator_map++)
     {
-        for (long unsigned int j = 0; j < P.size(); j++)
-        {
-            if (P[j] == search->second[i]){
-                intersectionP.push_back(P[j]);
-            }
-        }
-
-        // Création de l'intersection X
-        for (long unsigned int j = 0; j < X.size(); j++)
-        {
-            if (search->second[i] == X[j]){
-                intersectionX.push_back(X[j]);
-            }
-        }
+        A.push_back(iterator_map->first);
     }
-
-    BronKerboschPivot(unionR,intersectionP,intersectionX);
-    P.erase(remove(P.begin(),P.end(),P_Nu[0]),P.end());
-    X.push_back(P_Nu[0]);*/
+    
+    for (long unsigned int i = 0; i < A.size(); i++)
+    {
+        for (long unsigned int j = 0; j < A.size(); j++)
+        {
+            if (calcul_degre_sommet_liste(A[i]) < calcul_degre_sommet_liste(A[j]))
+            {
+                int v = A[i];
+                A[i] = A[j];
+                A[j] = v;
+            }
+        } 
+    }
+    return A;
 }
 
-/*
+void Graph::genOrdreDegenerescence()
+{
+    vector<int> A = triOrdreDegenerescence();
+    Graph g2 = *(this);
+    
+    for (int i = 0; i < nombre_sommets; i++)
+    {
+        ordre_degenerescence.push_back(A[0]);
+        g2.suppr_sommet(A[0]);
+        A = g2.triOrdreDegenerescence();
+    }
 
-algorithme BronKerbosch3(G)
-    P = V(G)
-    R = Ø
-    X = Ø
-    pour tout sommet v visités dans un ordre de dégénérescence de G faire
-        BronKerbosch2({v}, P ⋂ N(v), X ⋂ N(v))
-        P := P \ {v}
-        X := X ⋃ {v}
+    for (long unsigned int i = 0; i < ordre_degenerescence.size(); i++)
+    {
+        cout << ordre_degenerescence[i] << " ";
+    } 
+}
+
+void Graph::BronKerboschDegenerescence()
+{
+    vector<int> P = {};
+    vector<int> X = {};
+    vector<int> ordreDegenerescence = {};
+
+    for (int i = 0; i < nombre_sommets; i++)
+    {
+        P.push_back(i);
+    }
+    
+    genOrdreDegenerescence();
+    ordreDegenerescence = ordre_degenerescence;
+
+    for (long unsigned int i = 0; i < ordreDegenerescence.size(); i++)
+    {
+        vector<int> intersectionP = {};
+        vector<int> intersectionX = {};
+        vector<int> R = {};
+
+        int v = ordreDegenerescence [i];
+        auto search = liste_adjacence.find(v);
         
-*/
+        // Pour chaque voisin de "sommet"
+        for (long unsigned int i = 0; i<search->second.size(); i++)
+        {   
+            // Création de l'intersection P
+            for (long unsigned int j = 0; j < P.size(); j++)
+            {
+                if (P[j] == search->second[i]){
+                    intersectionP.push_back(P[j]);
+                }
+            }
+
+            // Création de l'intersection X
+            for (long unsigned int j = 0; j < X.size(); j++)
+            {
+                if (search->second[i] == X[j]){
+                    intersectionX.push_back(X[j]);
+                }
+            }
+        }
+
+        R.push_back(v);
+        BronKerboschPivot(R,intersectionP,intersectionX);
+        P.erase(remove(P.begin(),P.end(),v),P.end());
+        X.push_back(v);
+    }
+
+}
+
 
 int main() {
 
@@ -222,6 +271,38 @@ int main() {
     g.ajout_sommet();
     g.ajout_arete(1,3);
 
+    g.genOrdreDegenerescence();
+
+    g.BronKerboschDegenerescence();
+    g.afficher_cliqueMax();
+    
+
+    /*g.ajout_arete(0,1);
+
+    g.ajout_arete(1,2);
+    g.ajout_arete(1,3);
+    g.ajout_arete(1,4);
+    g.ajout_arete(1,6);
+
+    g.ajout_arete(2,4);
+    g.ajout_arete(2,8);
+    g.ajout_arete(2,5);
+
+    g.ajout_arete(3,4);
+    g.ajout_arete(3,7);
+    g.ajout_arete(3,8);
+
+    g.ajout_arete(4,5);
+    g.ajout_arete(4,6);
+    g.ajout_arete(4,7);
+    g.ajout_arete(4,8);
+
+    g.ajout_arete(5,7);
+
+    g.ajout_arete(6,8);
+
+    g.ajout_arete(7,8);*/
+
     /*
     g.ajout_arete(0,1); 
     g.ajout_arete(0,5);
@@ -235,10 +316,7 @@ int main() {
     g.ajout_arete(4,5);
     */
     
-    for (int i = 0; i < g.getNombreSommets(); i++)
-    {
-        P.push_back(i);
-    }
+    
     
     //g.BronKerboschPivot(R,P,X);
     //g.afficher_cliqueMax();
