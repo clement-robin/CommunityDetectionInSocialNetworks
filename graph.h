@@ -13,7 +13,6 @@ class Graph {
         // Fonction de base pour le graphe
         Graph();
         Graph(int nb_som);
-        //void afficher_graph_matrice();
         void afficher_graph_liste();
         void afficher_cliqueMax(); 
         void ajout_arete(int a, int b);
@@ -56,7 +55,6 @@ class Graph {
 
     private:
         int nombre_sommets;
-        //int ** matrice_adjacence;
         int degres_total;
         int nombre_cliqueMax;
         map <int,vector<int>>liste_adjacence;

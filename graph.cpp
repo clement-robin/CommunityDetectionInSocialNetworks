@@ -22,41 +22,12 @@ Graph::Graph(int nb_som)
     degres_total = 0;
     nombre_cliqueMax = 0;
 
-    /*int **tab = new int*[nombre_sommets];
-    for(int i = 0; i < nombre_sommets; ++i) {
-        tab[i] = new int[nombre_sommets];
-    }
-
-    for(int i=0; i<nombre_sommets; i++) {
-        for(int j=0; j<nombre_sommets; j++) {
-            tab[i][j]=0;
-        }
-    }
-    matrice_adjacence = tab;*/
-
     for (int i = 0; i < nb_som; i++)
     {
         vector<int> v (0, {});
         liste_adjacence.insert ( std::pair <int,vector<int>>(i,v) );
     }
 }
-
-/**
- * Fonction d'affichage du Graph dans la console de sa matrice d'adjacence et le nombre de degres totals
- */
-/*
-void Graph::afficher_graph_matrice()
-{
-    cout << "Graph :" << endl << endl;
-    for(int i=0; i<nombre_sommets; i++) {
-        for(int j=0; j<nombre_sommets; j++) {
-            cout << matrice_adjacence[i][j]<< " " ;
-        }
-        cout << endl;
-    }
-    cout << "Degres total = " << degres_total << endl;
-}
-*/
 
 /**
  * Fonction d'affichage du Graph dans la console de sa liste d'adjacence
@@ -105,8 +76,6 @@ void Graph::afficher_cliqueMax(){
  */
 void Graph::ajout_arete(int a, int b) 
 {
-    /*matrice_adjacence[a][b]=1;
-    matrice_adjacence[b][a]=1;*/
     map<int, vector<int>>::iterator iteratorCle;
 
     auto search = liste_adjacence.find(a);
@@ -151,29 +120,9 @@ void Graph::genere_graph_triangle()
     Graph g = Graph(3);
     nombre_sommets = 3;
     g.genere_arete_probabilite(1.0);
-    //matrice_adjacence = g.matrice_adjacence;
     liste_adjacence = g.liste_adjacence;
     degres_total = g.degres_total;
 }
-
-/**
- * Fonction qui compte le nombre de degres pour un sommet donne en parametre du Graph
- * @param s sommet dont on souhaite connaitre le degre
- * @return int compteur : nombre de degre du sommet
- */
-/*
-int Graph::calcul_degre_sommet_matrice(int s)
-{
-    int compteur=0;
-    for(int i=0; i<nombre_sommets ; i++) {
-        if(matrice_adjacence[s][i]==1)
-        {
-            compteur++;
-        }
-    }
-    return compteur;
-}
-*/
 
 /**
  * Fonction qui compte le nombre de degres pour un sommet donne en parametre du Graph
@@ -189,29 +138,10 @@ int Graph::calcul_degre_sommet_liste(int s)
 
 /**
  * Fonction qui ajout un sommet a un Graph
- * @param p probabilité entre 0 et 1 
+ * @param 
  */
 void Graph::ajout_sommet()
 {
-    /*
-    int **tab = new int*[nombre_sommets];
-    for(int i = 0; i < nombre_sommets; ++i) {
-        tab[i] = new int[nombre_sommets];
-    }
-
-    for(int i=0; i<nombre_sommets-1; i++) {
-        for(int j=0; j<nombre_sommets-1; j++) {
-            tab[i][j]=matrice_adjacence[i][j];
-        }
-    }
-    for(int i=nombre_sommets-1; i<nombre_sommets; i++) {
-        for(int j=nombre_sommets-1; j<nombre_sommets; j++) {
-            tab[i][j]=0;
-        }
-    }
-
-    matrice_adjacence = tab;*/
-
     nombre_sommets = nombre_sommets+1;
     vector<int> v (0, {});
     int s = liste_adjacence.size();
@@ -223,26 +153,6 @@ void Graph::ajout_sommet()
 // Supprimer un sommet dans un graphe;
 void Graph::suppr_sommet(int sommet)
 {
-    /*
-    int **tab = new int*[nombre_sommets];
-    for(int i = 0; i < nombre_sommets; ++i) {
-        tab[i] = new int[nombre_sommets];
-    }
-
-    for(int i=0; i<nombre_sommets; i++) {
-        for(int j=0; j<nombre_sommets; j++) {
-            if (i!=sommet && j!=sommet)
-            {
-                tab[i][j]=matrice_adjacence[i][j];
-            }
-            else
-            {
-                tab[i][j]=0;
-            }
-        }
-    }
-    matrice_adjacence = tab;*/
-
     auto search = liste_adjacence.find(sommet);
 
     degres_total = degres_total - (2*search->second.size());
@@ -336,6 +246,7 @@ map <int,vector<int>> Graph::getListeCliqueMax()
 {
     return liste_cliqueMax;
 }
+
 /**
  * Fonction qui demande a l'utilisateur de saisir un nombre positif et qui le retourne
  * @return int ans : nombre saisi par l'utilisateur

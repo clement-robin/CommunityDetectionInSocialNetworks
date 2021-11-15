@@ -302,7 +302,6 @@ int main() {
     //g.BronKerboschDegenerescence();
 
     g.afficher_cliqueMax();
-    
 
     return 0;
 }
