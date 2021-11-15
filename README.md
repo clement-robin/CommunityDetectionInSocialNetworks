@@ -1,12 +1,7 @@
 # CommunityDetectionInSocialNetworks
 Projet IATIC 4 - Détection de communautés dans des réseaux sociaux
 
-# Compilation
-Makefile pour compiler les fichiers (make doit necessairement être installé sur la machine)
 
-pour compiler : **make**
-pour executer : **./graph**
-pour supprimer les .o et executable : **make clean**
 
 # Arborescence
 Voici la répartition des fichiers suivant les parties du projets :
@@ -25,10 +20,35 @@ Voici la répartition des fichiers suivant les parties du projets :
 
 
 # Execution 
-Vous trouverez ci-dessous plusieurs exemples d'execution a modifier dans le **main** à la fin du fichier *bronkerbosch.cpp*
->ne pas oublier le `return 0` 
+## Compilation
+Makefile pour compiler les fichiers (make doit necessairement être installé sur la machine)
+
+pour compiler : **make**
+pour supprimer les .o et executable : **make clean**
+
+## Execution
+Afin d'executer, utilisez la commande : **make exe**
+
+Dans le terminal, vous devrez saisir l'exemple d'execution parmis les 9 choix possibles :
+### 1ere partie : génération de graphes
+- 1 Construction d'un graphe manuellement
+- 2 Generation avec une probabilite
+- 3 Verification des tests de generation par probabilite
+- 4 Generation selon Barabasi-Albert
+### 2eme partie : Bron-Kerbosch
+- 5 Bron-Kerbosch
+- 6 Bron-Kerbosch avec Pivot
+- 7 Dégénérescence avec Bron-Kerbosch
+### 3eme partie : Autres calcules des cliques max
+- 8 Algorithme 1
+- 9 Algorithme 2
+
+>vous devrez saisir un nombre parmis les choix pour vos tests
+> `-1` pour quitter
 
 ## Partie 1 : 
+
+Voici le code de chaque exemple d'execution, ils sont modifiable dans le `main.cpp` 
 
 ### - Génération de graphes :
 
@@ -39,7 +59,7 @@ g.ajout_sommet();
 g.ajout_sommet();
 g.ajout_sommet();
 
-g.ajout_arete(1,3)
+g.ajout_arete(1,3);
 g.ajout_arete(0,1); 
 g.ajout_arete(0,5);
 g.ajout_arete(1,5);
@@ -55,11 +75,9 @@ g.afficher_graph_matrice(); //affiche la matrice d'adjacence du graphe
 g.afficher_graph_liste(); //affiche la liste d'adjacence du graphe
 ```
 
-### Génération aléatoire de graphes :
+### - Génération aléatoire de graphes :
 
 ```cpp
-srand(time(NULL));
-
 Graph g = Graph(10);
 g.genere_arete_probabilite(0.56);
 
@@ -67,25 +85,16 @@ g.afficher_graph_matrice();
 g.afficher_graph_liste();
 ```
 
-### Test et vérification de la probabilité de la génération de graphes aléatoire
+### - Test et vérification de la probabilité de la génération de graphes aléatoire
 
 ```cpp
-srand(time(NULL));
-
-test_probabilite(10, 15000, 0.63);<br>
-// 10 taille des graphes<br>
-// 150000 le nombre de graphes différents généré pour le test<br>
-// 0.63 la probabilite testée<br>
+test_probabilite(10, 15000, 0.63);
 ```
 
-> cf. explication de l'algorithme de la fonction dans le rapport
 
-
-### Barabasi-Albert
+### - Barabasi-Albert
 
 ```cpp
-srand(time(NULL));
-
 Graph g = genere_barabasi_albert();
 g.afficher_graph_liste();
 ```
@@ -108,6 +117,7 @@ g.genere_graph_triangle();
 g.ajout_sommet();
 g.ajout_arete(1,3);
 
+// P contient tout les sommets du graphe
 for (int i = 0; i < g.getNombreSommets(); i++)
 {
     P.push_back(i);
@@ -128,3 +138,49 @@ g.BronKerboschPivot(R,P,X);
 ```
 
 ### - Dégénérécence de Bron-Kerbosch :
+```cpp
+Graph g = Graph();
+
+g.genere_graph_triangle();
+g.ajout_sommet();
+g.ajout_arete(1,3);
+g.afficher_graph_liste();
+
+g.BronKerboschDegenerescence();
+g.afficher_cliqueMax();
+```
+
+
+# Partie 3 : 
+
+### - Algorithme 1:
+```cpp
+map<int,vector<int>> T;
+Graph g = Graph(4);
+
+g.ajout_arete(0,1);
+g.ajout_arete(0,2);
+g.ajout_arete(1,2);
+g.ajout_arete(1,3);
+
+g.afficher_graph_liste();
+
+T = g.Algorithm1(g);
+
+map<int, vector<int>>::iterator p;
+for(p = T.begin(); p != T.end(); p++)
+{
+    cout << "clique "<< p->first << " : ";
+    for (long unsigned int i = 0; i < p->second.size(); i++)
+    {
+        cout << p->second[i] << " ";
+    }
+    cout << endl;
+}
+cout << endl;
+```
+
+### - 3.2 :
+```cpp
+test
+```

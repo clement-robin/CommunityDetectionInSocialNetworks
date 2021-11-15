@@ -283,6 +283,7 @@ Graph genere_barabasi_albert()
                 ans--;
             }
         }
+        g1.afficher_graph_liste();
         ans = demande_nombre();
     }
     return g1;

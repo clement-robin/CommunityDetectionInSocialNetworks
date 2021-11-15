@@ -2,11 +2,15 @@ CC=g++
 CFLAGS= -Wall
 EXE=graph
 
-all: graph.o bronkerbosch.o partie3.o 
+all: graph.o bronkerbosch.o partie3.o main.cpp
 	rm -f $(EXE)
-	$(CC) $(CFLAGS) graph.o bronkerbosch.o partie3.o -o $(EXE)
+	$(CC) $(CFLAGS) graph.o bronkerbosch.o partie3.o main.cpp -o $(EXE)
+
+exe: graph.o bronkerbosch.o partie3.o main.cpp
+	clear
 	./$(EXE)
-partie1.o: graph.cpp graph.h
+
+graph.o: graph.cpp graph.h
 	$(CC) $(CFLAGS) -c graph.cpp
 
 bronkerbosch.o: bronkerbosch.cpp bronkerbosch.h
@@ -18,4 +22,3 @@ partie3.o: partie3.cpp partie3.h
 clean:
 	rm -f *.o
 	rm -f $(EXE)
-
