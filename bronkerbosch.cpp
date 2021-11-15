@@ -265,8 +265,6 @@ void Graph::BronKerboschDegenerescence()
 
 }
 
-
-
 Graph Graph::genDecompositionGraphe(Graph g,int sommet)
 {
     Graph Gj = *(this); 
@@ -300,9 +298,9 @@ bool mapContient(map<int,vector<int>> m,vector<int> v)
 void compareOrdreDegenerescence(Graph g,vector<int>v)
 {
     vector<int> vordre={};
-    for (int i = 0; i < g.getOrdreDegenerescence().size(); i++)
+    for (long unsigned int i = 0; i < g.getOrdreDegenerescence().size(); i++)
     {
-        for (int j = 0; j < v.size(); j++)
+        for (long unsigned int j = 0; j < v.size(); j++)
         {
             if (v[j] == g.getOrdreDegenerescence()[i]){
                 vordre.push_back(v[j]);
@@ -313,7 +311,6 @@ void compareOrdreDegenerescence(Graph g,vector<int>v)
 }
 
 map<int,vector<int>> Graph::Algorithm1(Graph g){
-
 
     map<int,vector<int>> T = {};
     map<int,vector<int>> Tsuppr = {};
@@ -327,7 +324,7 @@ map<int,vector<int>> Graph::Algorithm1(Graph g){
         Gj.BronKerboschDegenerescence();
         map<int,vector<int>> Gj_clique = Gj.getListeCliqueMax();
 
-        for (int i = 0; i < Gj_clique.size(); i++)
+        for (long unsigned int i = 0; i < Gj_clique.size(); i++)
         {
             auto search = Gj_clique.find(i);
             compareOrdreDegenerescence(g,search->second);
@@ -348,38 +345,59 @@ map<int,vector<int>> Graph::Algorithm1(Graph g){
                 }
             }
         }
-
-        map<int, vector<int>>::iterator p;
-        for(p = T.begin(); p != T.end(); p++)
-        {
-            cout << "clique "<< p->first << " : ";
-            for (long unsigned int i = 0; i < p->second.size(); i++)
-            {
-                cout << p->second[i] << " ";
-            }
-            cout << endl;
-        }
-        cout << endl;
-        
     }
     return T;
 }
 
-/* for j = 1 to n do
+/*
+1 Compute k the degeneracy of G and σG .
+2 Compute the degenerate adjacency lists of G.
+3 Initialize T an empty generalized suffix tree
+4 for j = 1 to n do
 5 Compute all maximal cliques of graph G j .
 6 for every maximal clique K of graph G j do
-7 Order the vertices of K following σG
-8 Search for K in T .
-9 if there is a match then
-10 Reject it.
-11 else
-12 Insert the proper suffixes of K in T .
-13 Output K.*/
-
-/*map<int,vector<int>> Algorithm2(Graph g){
-   
-}
+7 for every vertex x ∈ K do
+8 if any of its neighbors in G with lower rank than v j in σG is adjacent to all the vertices in K then
+9 reject K .
+10 else
+11 output K .
 */
+
+map<int,vector<int>> Graph::Algorithm2(Graph g){
+    map<int,vector<int>> T = {};
+    map<int,vector<int>> Tsuppr = {};
+    Graph Gj = Graph(1);
+    g.genOrdreDegenerescence();
+    
+    for (int j = 1; j < g.getNombreSommets(); j++)
+    {
+        Gj = Gj.genDecompositionGraphe(g,j);
+
+        Gj.BronKerboschDegenerescence();
+        map<int,vector<int>> Gj_clique = Gj.getListeCliqueMax();
+
+        for (long unsigned int k = 0; k < Gj_clique.size(); k++)
+        {
+            auto search = Gj_clique.find(k);
+            for (long unsigned int i = 0; i < search->second.size(); i++)
+            {
+                if (1 /*any of its neighbors in G with lower rank than vj in σG is adjacent to all the vertices in K*/)
+                {
+                    //T.erase(k);
+                    //Tsuppr.insert( std::pair<int,vector<int>>(Tsuppr.size(),search->second));
+                }
+                else
+                {
+                    if (!mapContient(Tsuppr,search->second))
+                    {
+                        T.insert( std::pair<int,vector<int>>(T.size(),search->second));
+                    }
+                } 
+            }
+        }
+    }
+    return T;
+}
 
 /**
  * Fonction main qui permet de tester toutes les autres fonctions

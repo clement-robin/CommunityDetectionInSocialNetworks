@@ -56,6 +56,7 @@ class Graph {
         Graph genDecompositionGraphe(Graph g,int sommet);
 
         map<int,vector<int>> Algorithm1(Graph g);
+        map<int,vector<int>> Algorithm2(Graph g);
 
     private:
         int nombre_sommets;
@@ -72,4 +73,3 @@ void test_probabilite(int s, int nb, float p);
 int demande_nombre();
 Graph genere_barabasi_albert();
 void compareOrdreDegenerescence(Graph g,vector<int>v);
-//map<int,vector<int>> Algorithm2(Graph g);
