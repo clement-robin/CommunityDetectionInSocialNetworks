@@ -265,15 +265,121 @@ void Graph::BronKerboschDegenerescence()
 
 }
 
-/*map<int,vector<int>> Algorithm1(Graph g){
 
 
+Graph Graph::genDecompositionGraphe(Graph g,int sommet)
+{
+    Graph Gj = *(this); 
+    Gj.ajout_sommet();
+    auto search = g.liste_adjacence.find(sommet);
+
+    for (long unsigned int i = 0; i < search->second.size(); i++)
+    {
+        if (search->second[i] < Gj.getNombreSommets() && sommet != search->second[i])
+        {
+            Gj.ajout_arete(sommet,search->second[i]);
+        }
+    }
+
+    return Gj;
 }
 
-map<int,vector<int>> Algorithm2(Graph g){
+bool mapContient(map<int,vector<int>> m,vector<int> v)
+{   
+    map<int, vector<int>>::iterator iteMap;
+    for (iteMap = m.begin(); iteMap != m.end(); iteMap++)
+    {
+        if (iteMap->second == v)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void compareOrdreDegenerescence(Graph g,vector<int>v)
+{
+    vector<int> vordre={};
+    for (int i = 0; i < g.getOrdreDegenerescence().size(); i++)
+    {
+        for (int j = 0; j < v.size(); j++)
+        {
+            if (v[j] == g.getOrdreDegenerescence()[i]){
+                vordre.push_back(v[j]);
+            }
+        }
+    }
+    v = vordre;
+}
+
+map<int,vector<int>> Graph::Algorithm1(Graph g){
 
 
-}*/
+    map<int,vector<int>> T = {};
+    map<int,vector<int>> Tsuppr = {};
+    Graph Gj = Graph(1);
+    g.genOrdreDegenerescence();
+    
+    for (int j = 1; j < g.getNombreSommets(); j++)
+    {
+        Gj = Gj.genDecompositionGraphe(g,j);
+
+        Gj.BronKerboschDegenerescence();
+        map<int,vector<int>> Gj_clique = Gj.getListeCliqueMax();
+
+        for (int i = 0; i < Gj_clique.size(); i++)
+        {
+            auto search = Gj_clique.find(i);
+            compareOrdreDegenerescence(g,search->second);
+        }
+        
+        for (long unsigned int k = 0; k < Gj_clique.size(); k++)
+        {
+            auto search = Gj_clique.find(k);
+            if(mapContient(T,search->second)){
+                T.erase(k);
+                Tsuppr.insert( std::pair<int,vector<int>>(Tsuppr.size(),search->second));
+            }
+            else
+            {
+                if (!mapContient(Tsuppr,search->second))
+                {
+                    T.insert( std::pair<int,vector<int>>(T.size(),search->second));
+                }
+            }
+        }
+
+        map<int, vector<int>>::iterator p;
+        for(p = T.begin(); p != T.end(); p++)
+        {
+            cout << "clique "<< p->first << " : ";
+            for (long unsigned int i = 0; i < p->second.size(); i++)
+            {
+                cout << p->second[i] << " ";
+            }
+            cout << endl;
+        }
+        cout << endl;
+        
+    }
+    return T;
+}
+
+/* for j = 1 to n do
+5 Compute all maximal cliques of graph G j .
+6 for every maximal clique K of graph G j do
+7 Order the vertices of K following σG
+8 Search for K in T .
+9 if there is a match then
+10 Reject it.
+11 else
+12 Insert the proper suffixes of K in T .
+13 Output K.*/
+
+/*map<int,vector<int>> Algorithm2(Graph g){
+   
+}
+*/
 
 /**
  * Fonction main qui permet de tester toutes les autres fonctions
@@ -281,27 +387,38 @@ map<int,vector<int>> Algorithm2(Graph g){
  */
 int main() {
 
-    Graph g = Graph();
+    map<int,vector<int>> T;
+    Graph g = Graph(4);
     vector<int> R = {};
     vector<int> P = {};
     vector<int> X = {};
 
-    g.genere_graph_triangle();
-    g.ajout_sommet();
+    g.ajout_arete(0,1);
+    g.ajout_arete(0,2);
+    g.ajout_arete(1,2);
     g.ajout_arete(1,3);
-
-    g.afficher_graph_liste();
 
     for (int i = 0; i < g.getNombreSommets(); i++)
     {
         P.push_back(i);
     }
 
-    //g.BronKerbosch(R,P,X);
-    g.BronKerboschPivot(R,P,X);
-    //g.BronKerboschDegenerescence();
+    T = g.Algorithm1(g);
 
-    g.afficher_cliqueMax();
+    map<int, vector<int>>::iterator p;
+    for(p = T.begin(); p != T.end(); p++)
+    {
+        cout << "clique "<< p->first << " : ";
+        for (long unsigned int i = 0; i < p->second.size(); i++)
+        {
+            cout << p->second[i] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+
+    //g.BronKerboschDegenerescence();
+    //g.afficher_cliqueMax();
 
     return 0;
 }
