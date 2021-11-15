@@ -1,11 +1,11 @@
 #include "bronkerbosch.h"
 
 /**
- * La fonction BronKerbosch perlet de trouver toutes les cliques max du graphe
- * selon la méthode de Bron-Kerbosch
- * @param R une ensemble de sommet
- * @param P ensemble de sommet avec une partie de R
- * @param X ensemble de sommet avec aucun sommet de R
+ * La fonction BronKerbosch peemet de trouver toutes les cliques max d'un graphe 
+ * selon la méthode de Bron-Kerbosch (Algo récursif)
+ * @param R Un vecteur qui est vide lors du premier appel, puis contient après l'ensemble des sommets qui appartiennent a la clique maximale
+ * @param P Un vecteur qui comprend lors du premier appel tous les sommets du graphe a traité
+ * @param X un vecteur qui est vide lors du premier appel, puis contient après l'ensemble des sommets déjà traité
  */
 void Graph::BronKerbosch(vector<int> R, vector<int> P, vector<int> X){
 
@@ -56,10 +56,10 @@ void Graph::BronKerbosch(vector<int> R, vector<int> P, vector<int> X){
 
 /**
  * La fonction BronKerboschPivot permet de trouver toutes les cliques max du graphe
- * selon la méthode de Bron-Kerbosch mais cette fois-ci en utilisant un pivot
- * @param R une ensemble de sommet
- * @param P ensemble de sommet avec une partie de R
- * @param X ensemble de sommet avec aucun sommet de R
+ * selon la méthode de Bron-Kerbosch mais cette fois-ci en utilisant un pivot qui permet de reduire le nombre d'appel (Algo récursif) 
+ * @param R Un vecteur qui est vide lors du premier appel, puis contient après l'ensemble des sommets qui appartiennent a la clique maximale
+ * @param P Un vecteur qui comprend lors du premier appel tous les sommets du graphe a traité
+ * @param X un vecteur qui est vide lors du premier appel, puis contient après l'ensemble des sommets déjà traité
  */
 void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
 {
@@ -176,6 +176,11 @@ void Graph::BronKerboschPivot(vector<int> R, vector<int> P, vector<int> X)
     }
 }
 
+/**
+ * La fonction triOrdreDegenerescence permet de trier l'ensemble
+ * des sommets selon l'odre de dégénérescence du graphe
+ * Retourne le vecteur trier des sommets selon l'odre de dégénérescence du graphe
+ */
 vector <int> Graph::triOrdreDegenerescence()
 {
     vector<int> A = {};
@@ -201,6 +206,10 @@ vector <int> Graph::triOrdreDegenerescence()
     return A;
 }
 
+/**
+ * La fonction genOrdreDegenerescence permet de générer 
+ * l'ordre de dégénérescence du graphe
+ */
 void Graph::genOrdreDegenerescence()
 {
     vector<int> A = triOrdreDegenerescence();
@@ -214,6 +223,12 @@ void Graph::genOrdreDegenerescence()
     }
 }
 
+/**
+ * La fonction BronKerboschDegenerescence permet de trouver toutes les cliques max du graphe
+ * selon la méthode de Bron-KerboschPivot mais cette fois-ci en utilisant l'ordre de dégénérescence
+ * du graphe, ce qui permet de reduire le nombre d'appel et de trouver les cliques max du graphe
+ * plus rapidement
+ */
 void Graph::BronKerboschDegenerescence()
 {
     vector<int> P = {};
@@ -265,6 +280,13 @@ void Graph::BronKerboschDegenerescence()
 
 }
 
+/**
+ * La fonction genDecompositionGraphe permet de construire un graphe a partir d'un graphe donner
+ * en entrée et en ajoutant le sommet donner en parametre, la fonction ajoute les arretes et retourne 
+ * ainsi le graphe construit
+ * @param g le graphe de reference
+ * @param sommet un sommet du graphe
+ */
 Graph Graph::genDecompositionGraphe(Graph g,int sommet)
 {
     Graph Gj = *(this); 
@@ -282,6 +304,13 @@ Graph Graph::genDecompositionGraphe(Graph g,int sommet)
     return Gj;
 }
 
+/**
+ * La fonction mapContient permet de savoir si un vecteur est contenu 
+ * dans une table de hachage de vecteur
+ * Retourne true si le vecteur est dedans, false sinon
+ * @param m une table de hachage de vecteur
+ * @param v un vecteur
+ */
 bool mapContient(map<int,vector<int>> m,vector<int> v)
 {   
     map<int, vector<int>>::iterator iteMap;
@@ -295,6 +324,13 @@ bool mapContient(map<int,vector<int>> m,vector<int> v)
     return false;
 }
 
+/**
+ * La fonction compareOrdreDegenerescence compare et trie
+ * un vecteur pour qu'il stocke les sommets
+ * dans l'ordre de dégénérescence du graphe g
+ * @param g graphe de reference
+ * @param v un vecteur
+ */
 void compareOrdreDegenerescence(Graph g,vector<int>v)
 {
     vector<int> vordre={};
@@ -310,6 +346,13 @@ void compareOrdreDegenerescence(Graph g,vector<int>v)
     v = vordre;
 }
 
+/**
+ * La fonction Algorithm1 permet de trouver toutes 
+ * en utilisant l'ordre de dégénérescence du graphe et BronKerboschDegenerescence
+ * Cette algorithme est beaucoup plus rapide et moins couteux que l'algo de BronKerbosch
+ * Retourne les cliques max du graphe g
+ * @param g graphe de reference
+ */
 map<int,vector<int>> Graph::Algorithm1(Graph g){
 
     map<int,vector<int>> T = {};
@@ -349,20 +392,13 @@ map<int,vector<int>> Graph::Algorithm1(Graph g){
     return T;
 }
 
-/*
-1 Compute k the degeneracy of G and σG .
-2 Compute the degenerate adjacency lists of G.
-3 Initialize T an empty generalized suffix tree
-4 for j = 1 to n do
-5 Compute all maximal cliques of graph G j .
-6 for every maximal clique K of graph G j do
-7 for every vertex x ∈ K do
-8 if any of its neighbors in G with lower rank than v j in σG is adjacent to all the vertices in K then
-9 reject K .
-10 else
-11 output K .
-*/
 
+/**
+ * La fonction Algorithm2 permet de trouver toutes les cliques max du graphe
+ * C'est une amélioration de Algorithm1
+ * Retourne les cliques max du graphe g
+ * @param g graphe de reference
+ */
 map<int,vector<int>> Graph::Algorithm2(Graph g){
     map<int,vector<int>> T = {};
     map<int,vector<int>> Tsuppr = {};
@@ -381,10 +417,10 @@ map<int,vector<int>> Graph::Algorithm2(Graph g){
             auto search = Gj_clique.find(k);
             for (long unsigned int i = 0; i < search->second.size(); i++)
             {
-                if (1 /*any of its neighbors in G with lower rank than vj in σG is adjacent to all the vertices in K*/)
+                if (true/*any of its neighbors in G with lower rank than vj in σG is adjacent to all the vertices in K*/)
                 {
-                    //T.erase(k);
-                    //Tsuppr.insert( std::pair<int,vector<int>>(Tsuppr.size(),search->second));
+                    T.erase(k);
+                    Tsuppr.insert( std::pair<int,vector<int>>(Tsuppr.size(),search->second));
                 }
                 else
                 {

@@ -24,7 +24,6 @@ class Graph {
         void genere_graph_triangle();
 
         // Calcul sur le graph
-        //int calcul_degre_sommet_matrice(int s);
         int calcul_degre_sommet_liste(int s);
 
         // Setters et Getters
@@ -64,7 +63,7 @@ class Graph {
         int nombre_cliqueMax;
         map <int,vector<int>>liste_adjacence;
         map <int,vector<int>>liste_cliqueMax;
-        vector<int> result_cliques;
+    
         vector<int> ordre_degenerescence;
         
 };

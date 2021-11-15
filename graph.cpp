@@ -150,7 +150,11 @@ void Graph::ajout_sommet()
 }
 
 
-// Supprimer un sommet dans un graphe;
+
+/**
+ * La fonction suppr_sommet permet de supprimer un sommet du graphe
+ * @param sommet sommet que l'on souhaite supprimer
+ */
 void Graph::suppr_sommet(int sommet)
 {
     auto search = liste_adjacence.find(sommet);
@@ -217,31 +221,43 @@ void Graph::AddListeCliqueMax(vector<int>clique)
     nombre_cliqueMax++;
 }
 
+/**
+ * Getter du champ liste_adjacence qui retourne la liste d'adjacence du graphe
+ * 
+ * @return map <int,vector<int>> liste_adjacence
+ */
 map <int,vector<int>> Graph::getListeAdjacence()
 {
     return liste_adjacence;
 }
 
-vector<int> Graph::getResultCliques()
-{
-    return result_cliques;
-}
 
+/**
+ * Getter du champ ordre_degenerescence qui retourne la liste des sommets suivant l'ordre de degenerescence
+ * 
+ * @return vector<int> return ordre_degenerescence;
+
+ */
 vector<int> Graph::getOrdreDegenerescence()
 {
     return ordre_degenerescence;
 }
 
-void Graph::setResultCliques(vector<int> resultcliques)
-{
-    result_cliques = resultcliques;
-}
-
+/**
+ * Setter du champ ordredegenerescence qui permet de modifier l'ordre de degenerescence du graphe
+ * 
+ * @param ordredegenerescence 
+ */
 void Graph::setOrdreDegenerescence(vector<int> ordredegenerescence)
 {
     ordre_degenerescence = ordredegenerescence;
 }
 
+/**
+ * Getter getListeCliqueMax permet de retourner la liste de toutes les cliques max du graphe
+ * 
+ * @return map <int,vector<int>> getListeCliqueMax
+ */
 map <int,vector<int>> Graph::getListeCliqueMax()
 {
     return liste_cliqueMax;
@@ -313,8 +329,3 @@ void test_probabilite(int sommets, int nombre_test, float proba)
     float taux_erreur= (abs(valeur_test-proba)/proba)*100;
     cout << "taux d'erreur : " << taux_erreur << "%" << endl;
 }
-
-
-
-
-
