@@ -177,6 +177,7 @@ int main() {
             break;
         }
         case 8: { // algo 1
+            cout << "partie 3.2 : Algo1" << endl;
             map<int,vector<int>> T;
             Graph g = Graph(4);
 
@@ -203,16 +204,37 @@ int main() {
             break;
         }
         case 9: {
-            cout << "partie 3.2" << endl;
+            cout << "partie 3.2 : Algo2" << endl;
+            map<int,vector<int>> T;
+            Graph g = Graph(4);
+
+            g.ajout_arete(0,1);
+            g.ajout_arete(0,2);
+            g.ajout_arete(1,2);
+            g.ajout_arete(1,3);
+            
+            g.afficher_graph_liste();
+
+            T = g.Algorithm2(g);
+
+            map<int, vector<int>>::iterator p;
+            for(p = T.begin(); p != T.end(); p++)
+            {
+                cout << "clique "<< p->first << " : ";
+                for (long unsigned int i = 0; i < p->second.size(); i++)
+                {
+                    cout << p->second[i] << " ";
+                }
+                cout << endl;
+            }
+            cout << endl;
             break;
         }    
         default:
             cout << "non definit" << endl;
             break;
         }
-
        ans = affichage_demande_exemples();
-
     }
     return 0;
 }
