@@ -265,6 +265,15 @@ void Graph::BronKerboschDegenerescence()
 
 }
 
+/*map<int,vector<int>> Algorithm1(Graph g){
+
+
+}
+
+map<int,vector<int>> Algorithm2(Graph g){
+
+
+}*/
 
 /**
  * Fonction main qui permet de tester toutes les autres fonctions
@@ -273,68 +282,27 @@ void Graph::BronKerboschDegenerescence()
 int main() {
 
     Graph g = Graph();
-    vector<int> R;
-    vector<int> P;
-    vector<int> X;
+    vector<int> R = {};
+    vector<int> P = {};
+    vector<int> X = {};
 
     g.genere_graph_triangle();
     g.ajout_sommet();
     g.ajout_arete(1,3);
 
-    g.BronKerboschDegenerescence();
-    g.afficher_cliqueMax();
-    
-    /*g.ajout_arete(0,1);
+    g.afficher_graph_liste();
 
-    g.ajout_arete(1,2);
-    g.ajout_arete(1,3);
-    g.ajout_arete(1,4);
-    g.ajout_arete(1,6);
-
-    g.ajout_arete(2,4);
-    g.ajout_arete(2,8);
-    g.ajout_arete(2,5);
-
-    g.ajout_arete(3,4);
-    g.ajout_arete(3,7);
-    g.ajout_arete(3,8);
-
-    g.ajout_arete(4,5);
-    g.ajout_arete(4,6);
-    g.ajout_arete(4,7);
-    g.ajout_arete(4,8);
-
-    g.ajout_arete(5,7);
-
-    g.ajout_arete(6,8);
-
-    g.ajout_arete(7,8);*/
-
-    /*
-    g.ajout_arete(0,1); 
-    g.ajout_arete(0,5);
-    g.ajout_arete(1,5);
-    g.ajout_arete(1,2);
-    g.ajout_arete(1,4);
-    g.ajout_arete(2,3);
-    g.ajout_arete(2,4);
-    g.ajout_arete(2,5);
-    g.ajout_arete(3,4);
-    g.ajout_arete(4,5);
-    */
-    
-    
-    
-    //g.BronKerboschPivot(R,P,X);
-    //g.afficher_cliqueMax();
     for (int i = 0; i < g.getNombreSommets(); i++)
     {
         P.push_back(i);
     }
 
     //g.BronKerbosch(R,P,X);
-    //g.afficher_cliqueMax();
+    g.BronKerboschPivot(R,P,X);
+    //g.BronKerboschDegenerescence();
 
+    g.afficher_cliqueMax();
     
+
     return 0;
 }

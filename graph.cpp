@@ -22,7 +22,7 @@ Graph::Graph(int nb_som)
     degres_total = 0;
     nombre_cliqueMax = 0;
 
-    int **tab = new int*[nombre_sommets];
+    /*int **tab = new int*[nombre_sommets];
     for(int i = 0; i < nombre_sommets; ++i) {
         tab[i] = new int[nombre_sommets];
     }
@@ -32,7 +32,7 @@ Graph::Graph(int nb_som)
             tab[i][j]=0;
         }
     }
-    matrice_adjacence = tab;
+    matrice_adjacence = tab;*/
 
     for (int i = 0; i < nb_som; i++)
     {
@@ -44,6 +44,7 @@ Graph::Graph(int nb_som)
 /**
  * Fonction d'affichage du Graph dans la console de sa matrice d'adjacence et le nombre de degres totals
  */
+/*
 void Graph::afficher_graph_matrice()
 {
     cout << "Graph :" << endl << endl;
@@ -55,6 +56,7 @@ void Graph::afficher_graph_matrice()
     }
     cout << "Degres total = " << degres_total << endl;
 }
+*/
 
 /**
  * Fonction d'affichage du Graph dans la console de sa liste d'adjacence
@@ -103,9 +105,8 @@ void Graph::afficher_cliqueMax(){
  */
 void Graph::ajout_arete(int a, int b) 
 {
-    matrice_adjacence[a][b]=1;
-    matrice_adjacence[b][a]=1;
-    degres_total+=2;
+    /*matrice_adjacence[a][b]=1;
+    matrice_adjacence[b][a]=1;*/
     map<int, vector<int>>::iterator iteratorCle;
 
     auto search = liste_adjacence.find(a);
@@ -118,6 +119,8 @@ void Graph::ajout_arete(int a, int b)
 
     iteratorValeur = search->second.end();
     search->second.insert(iteratorValeur, a); 
+
+    degres_total+=2;
 }
 
 /**
@@ -148,7 +151,7 @@ void Graph::genere_graph_triangle()
     Graph g = Graph(3);
     nombre_sommets = 3;
     g.genere_arete_probabilite(1.0);
-    matrice_adjacence = g.matrice_adjacence;
+    //matrice_adjacence = g.matrice_adjacence;
     liste_adjacence = g.liste_adjacence;
     degres_total = g.degres_total;
 }
@@ -158,6 +161,7 @@ void Graph::genere_graph_triangle()
  * @param s sommet dont on souhaite connaitre le degre
  * @return int compteur : nombre de degre du sommet
  */
+/*
 int Graph::calcul_degre_sommet_matrice(int s)
 {
     int compteur=0;
@@ -169,6 +173,7 @@ int Graph::calcul_degre_sommet_matrice(int s)
     }
     return compteur;
 }
+*/
 
 /**
  * Fonction qui compte le nombre de degres pour un sommet donne en parametre du Graph
@@ -188,7 +193,7 @@ int Graph::calcul_degre_sommet_liste(int s)
  */
 void Graph::ajout_sommet()
 {
-    nombre_sommets = nombre_sommets+1;
+    /*
     int **tab = new int*[nombre_sommets];
     for(int i = 0; i < nombre_sommets; ++i) {
         tab[i] = new int[nombre_sommets];
@@ -205,8 +210,9 @@ void Graph::ajout_sommet()
         }
     }
 
-    matrice_adjacence = tab;
+    matrice_adjacence = tab;*/
 
+    nombre_sommets = nombre_sommets+1;
     vector<int> v (0, {});
     int s = liste_adjacence.size();
 
@@ -217,6 +223,7 @@ void Graph::ajout_sommet()
 // Supprimer un sommet dans un graphe;
 void Graph::suppr_sommet(int sommet)
 {
+    /*
     int **tab = new int*[nombre_sommets];
     for(int i = 0; i < nombre_sommets; ++i) {
         tab[i] = new int[nombre_sommets];
@@ -234,8 +241,8 @@ void Graph::suppr_sommet(int sommet)
             }
         }
     }
+    matrice_adjacence = tab;*/
 
-    matrice_adjacence = tab;
     auto search = liste_adjacence.find(sommet);
 
     degres_total = degres_total - (2*search->second.size());
@@ -305,6 +312,30 @@ map <int,vector<int>> Graph::getListeAdjacence()
     return liste_adjacence;
 }
 
+vector<int> Graph::getResultCliques()
+{
+    return result_cliques;
+}
+
+vector<int> Graph::getOrdreDegenerescence()
+{
+    return ordre_degenerescence;
+}
+
+void Graph::setResultCliques(vector<int> resultcliques)
+{
+    result_cliques = resultcliques;
+}
+
+void Graph::setOrdreDegenerescence(vector<int> ordredegenerescence)
+{
+    ordre_degenerescence = ordredegenerescence;
+}
+
+map <int,vector<int>> Graph::getListeCliqueMax()
+{
+    return liste_cliqueMax;
+}
 /**
  * Fonction qui demande a l'utilisateur de saisir un nombre positif et qui le retourne
  * @return int ans : nombre saisi par l'utilisateur
@@ -345,7 +376,6 @@ Graph genere_barabasi_albert()
     }
     return g1;
 }
-
 
 /**
  * Fonction qui test si les probabilites sont bien respecte lors d'une generation de graph avec la fonction genere_arete_probabilite(p)
